@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Bar, ContainerLogo, Menu, ListMenu, ItemMenu } from "./style";
 import logo from "../../../assets/logo.svg";
-import iconDashboard from "../../../assets/dasboard-icon.svg";
 import iconDiligencia from "../../../assets/diligencia-icon.svg";
 import iconExecutores from "../../../assets/executores-icon.svg";
 import iconEmpresas from "../../../assets/empresas-icon.svg";
