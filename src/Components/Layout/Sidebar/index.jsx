@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Bar, ContainerLogo, Menu, ListMenu, ItemMenu } from "./style";
 import logo from "../../../assets/logo.svg";
-import iconDashboard from "../../../assets/dashboard-icon.svg";
 import iconDiligencia from "../../../assets/diligencia-icon.svg";
 import iconExecutores from "../../../assets/executores-icon.svg";
 import iconEmpresas from "../../../assets/empresas-icon.svg";
@@ -33,7 +32,7 @@ export function SideBar() {
       <Menu>
         <ListMenu>
           {[
-            { icon: iconDashboard, text: "Dashboard", path: "/" },
+            { icon: iconExecutores, text: "Dashboard", path: "/" },
             { icon: iconDiligencia, text: "Diligências", path: "/diligencias" },
             { icon: iconExecutores, text: "Executores", path: "/executores" },
             { icon: iconEmpresas, text: "Empresas", path: "/empresas" },
