@@ -61,3 +61,18 @@ export const ItemMenu = styled.li`
     }
   }
 `;
+
+export const Logout = styled.button`
+  padding: 5px 15px;
+  margin-top: 30vh;
+  width: 100%;
+  max-width: 21rem;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: transparent;
+  img {
+    width: 15px;
+    margin-right: 10px;
+  }
+`;

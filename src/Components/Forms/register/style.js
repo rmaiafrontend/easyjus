@@ -58,7 +58,7 @@ export const ButtonEntrar = styled.button`
   height: 42px;
   border-radius: 6.924px;
   background: #7874ff;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #fff;
 `;

@@ -1,14 +1,28 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }`;
 
 export const Overlay = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  z-index: 999; /* Coloca o overlay acima de outros elementos */
+  background: rgb(0 0 0 / 14%);
   backdrop-filter: blur(1.5px);
+  animation: ${fadeIn} 0.1s ease-in-out;
 `;
 
 export const Form = styled.div`
@@ -53,6 +67,7 @@ export const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: ${fadeIn} 0.3s ease-in-out;
 `;
 export const Button = styled.button`
   margin-top: 1rem;

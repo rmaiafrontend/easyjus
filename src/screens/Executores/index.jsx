@@ -10,7 +10,6 @@ export function SectionExcutores() {
   return (
     <>
       <AllContent>
-        <SideBar />
         <MainContent>
           <Container>
             <Buttons>

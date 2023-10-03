@@ -1,27 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { Bar, ContainerLogo, Menu, ListMenu, ItemMenu } from "./style";
+import { Bar, ContainerLogo, Menu, ListMenu, ItemMenu, Logout } from "./style";
 import logo from "../../../assets/logo.svg";
+import logoutIcon from "../../../assets/logoutIcon.svg";
 import iconDiligencia from "../../../assets/diligencia-icon.svg";
 import iconExecutores from "../../../assets/executores-icon.svg";
 import iconEmpresas from "../../../assets/empresas-icon.svg";
 import iconFinanceiro from "../../../assets/financeiro-icon.svg";
 import iconConfig from "../../../assets/configuracoes-icon.svg";
+import { useLogout } from "../../../hooks/useLogout";
 
 export function SideBar() {
-  // State to keep track of the active button
-
+  const { logout, error, isPending } = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
   const [activeButton, setActiveButton] = useState(currentPath);
 
-  // Function to handle button click and set the active button
+  // Função para lidar com o clique no botão e definir o botão ativo
   const handleButtonClick = (index, path) => {
-    console.log("Botão clicado:", index);
     setActiveButton(index);
     navigate(path);
+  };
+
+  // Função para lidar com o logout
+  const handleLogout = () => {
+    // Limpar o localStorage ao efetuar o logout
+    localStorage.clear();
+    logout(); // Chame a função de logout
   };
 
   return (
@@ -50,6 +57,10 @@ export function SideBar() {
           ))}
         </ListMenu>
       </Menu>
+      <Logout onClick={handleLogout}>
+        <img src={logoutIcon} alt="" />
+        Fazer Logout
+      </Logout>
     </Bar>
   );
 }

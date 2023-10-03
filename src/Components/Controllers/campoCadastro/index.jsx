@@ -1,13 +1,13 @@
 import React from "react";
-import { Campo } from "./style";
+import { Campo, Title, Input } from "./style";
 
-const CampoInput = ({ label, placeholder }) => {
+const CampoInput = ({ value, label, placeholder, readOnly, onChange, id, type }) => {
   return (
     <Campo>
-      <div className="title">
+      <Title>
         <span>{label}</span>
-      </div>
-      <input type="text" value={placeholder} />
+      </Title>
+      <Input id={id} type={type} value={value} placeholder={placeholder} readOnly={readOnly} onChange={onChange} />
     </Campo>
   );
 };
