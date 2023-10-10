@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Card, Top, Main, Button, Image, Right, Infos, ButtonDelete, InfosList } from "./style";
 import userIcon from "../../../assets/userIcon.svg";
 
-export function CardExecutor(props) {
+export function CardEmpresa(props) {
   const backgroundUrl = props.profileFoto ? props.profileFoto.downloadURL : null;
 
   return (
@@ -40,7 +40,7 @@ export function CardExecutor(props) {
         </InfosList>
       </Main>
       <Button>Mais informações</Button>
-      <ButtonDelete onClick={() => props.handleDeleteExecutor(props.id)}>Excluir Executor</ButtonDelete>
+      <ButtonDelete onClick={() => props.handleDeleteExecutor(props.id)}>Excluir Empresa</ButtonDelete>
     </Card>
   );
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerExecutores = styled.div`
+export const ContainerEmpresas = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(31.5rem, 3fr));

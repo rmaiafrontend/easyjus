@@ -1,27 +1,27 @@
 import { MainContent, AllContent, Container, Buttons, Cards } from "./style";
-import SideBar from "../../Components/Layout/Sidebar/index";
 import CadastraExecutor from "../../Components/Controllers/cadastraExecutor";
 import { FormExecutor } from "../../Components/Forms/formExecutor";
-import { CardExecutor } from "../../Components/Cards/cardExecutor";
+import { ListExecutores } from "../../Components/Lists/ListExecutores";
 import { useState } from "react";
 
 export function SectionExcutores() {
   const [showElement, setShowElement] = useState(false);
+  const [atualizaExecutores, setatualizaExecutores] = useState(0);
   return (
     <>
       <AllContent>
         <MainContent>
           <Container>
             <Buttons>
-              <CadastraExecutor setShowElement={setShowElement} />
+              <CadastraExecutor setShowElement={setShowElement} atualizaExecutores={atualizaExecutores} setatualizaExecutores={setatualizaExecutores} />
             </Buttons>
             <Cards>
               <h2>Todos os executores</h2>
-              <CardExecutor />
+              <ListExecutores atualizaExecutores={atualizaExecutores} setatualizaExecutores={setatualizaExecutores} />
             </Cards>
           </Container>
         </MainContent>
-        {showElement && <FormExecutor setShowElement={setShowElement} />}
+        {showElement && <FormExecutor setatualizaExecutores={setatualizaExecutores} setShowElement={setShowElement} />}
       </AllContent>
     </>
   );

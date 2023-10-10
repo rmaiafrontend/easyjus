@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Bar = styled.div`
-  width: 100%;
-  max-width: 29rem;
+  margin: 20px;
+  border-radius: 15px 0 0 15px;
+  width: 290px;
   height: 100vh;
   padding-top: 5.2rem;
   display: flex;

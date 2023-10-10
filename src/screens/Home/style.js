@@ -5,9 +5,7 @@ export const Container = styled.div`
   padding: 0px 30px 0 30px;
   margin: 0 auto;
 `;
-export const MainContent = styled.div`
-  width: 100%;
-`;
+export const MainContent = styled.div``;
 
 export const Titles = styled.div`
   margin-top: 5.2rem;

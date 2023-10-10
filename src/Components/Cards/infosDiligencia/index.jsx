@@ -57,7 +57,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
   const handleFileUpload = async (e) => {
     const storage = getStorage();
     const file = e.target.files[0];
-    const storageRef = ref(storage, `docs/${diligencia.firestoreId}/${file.name}`);
+    const storageRef = ref(storage, `users/${user.uid}/docs/${diligencia.firestoreId}/${file.name}`);
 
     try {
       setUploading(true);
@@ -182,7 +182,6 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
             <BottonContent>
               <h4>Documentos</h4>
               <label htmlFor="fileInput">Clique aqui para anexar um arquivo</label>
-
               <input
                 className="inputFile"
                 type="file"

@@ -19,8 +19,8 @@ export function SideBar() {
   const [activeButton, setActiveButton] = useState(currentPath);
 
   // Função para lidar com o clique no botão e definir o botão ativo
-  const handleButtonClick = (index, path) => {
-    setActiveButton(index);
+  const handleButtonClick = (path) => {
+    setActiveButton(path);
     navigate(path);
   };
 
@@ -47,7 +47,7 @@ export function SideBar() {
             { icon: iconConfig, text: "Configurações", path: "/configuracoes" },
           ].map((item, index) => (
             <ItemMenu key={index}>
-              <button onClick={() => handleButtonClick(index, item.path)} className={activeButton === item.path ? "active" : ""}>
+              <button onClick={() => handleButtonClick(item.path)} className={currentPath === item.path ? "active" : ""}>
                 <div className="icon">
                   <img src={item.icon} alt="" />
                 </div>

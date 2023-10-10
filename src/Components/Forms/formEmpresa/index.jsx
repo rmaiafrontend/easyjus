@@ -7,7 +7,7 @@ import { doc, addDoc, collection, setDoc, updateDoc, arrayUnion } from "firebase
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaExecutores }) {
+export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpresas }) {
   const { user, dispatch } = useContext(AuthContext);
   const storage = getStorage();
 
@@ -20,10 +20,10 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   const [infoDeposito, setInfoDeposito] = useState("");
 
   const userRef = doc(db, "users", user.uid); // Crie uma referência ao documento do usuário
-  const executoresRef = collection(userRef, "executores"); // Crie uma referência à subcoleção "diligencias"
+  const empresasRef = collection(userRef, "empresas"); // Crie uma referência à subcoleção "diligencias"
 
   // Estado para armazenar a lista de executores
-  const [listaExecutores, setListaExecutores] = useState([]);
+  const [listaEmpresas, setListaEmpresas] = useState([]);
 
   function handleClick() {
     setShowElement(false);
@@ -31,9 +31,9 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
 
   useEffect(() => {
     // Carregue a lista de executores do localStorage ao montar o componente
-    const localStorageData = localStorage.getItem("listaExecutores");
-    const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    setListaExecutores(listaExecutoresLocal);
+    const localStorageData = localStorage.getItem("listaEmpresas");
+    const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
+    setListaEmpresas(listaEmpresasLocal);
   }, []);
 
   async function submitForm(event) {
@@ -61,7 +61,7 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
 
       if (foto) {
         const file = foto[0];
-        const storageRef = ref(storage, `users/${user.uid}/profile/${file.name}`);
+        const storageRef = ref(storage, `users/${user.uid}/empresas/profile/${file.name}`);
         const snapshot = await uploadBytes(storageRef, file);
         const downloadURL = await getDownloadURL(storageRef);
         const newDocument = { name: file.name, downloadURL };
@@ -69,24 +69,24 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
       }
 
       // Adicione o executor ao Firestore e obtenha o ID gerado
-      const docRef = await addDoc(executoresRef, docData);
+      const docRef = await addDoc(empresasRef, docData);
 
       // Adicione o Firestore document ID (firestoreId) ao objeto docData
       docData.firestoreId = docRef.id;
       // Adicione o executor à lista de executores no localStorage ao ser cadastrado
-      const localStorageData = localStorage.getItem("listaExecutores");
-      const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-      localStorage.setItem("listaExecutores", JSON.stringify(listaExecutoresLocal));
+      const localStorageData = localStorage.getItem("listaEmpresas");
+      const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
+      localStorage.setItem("listaEmpresas", JSON.stringify(listaEmpresasLocal));
 
-      listaExecutoresLocal.unshift(docData);
+      listaEmpresasLocal.unshift(docData);
 
       // Atualize o estado com a nova lista de executores
-      setListaExecutores(listaExecutoresLocal);
-      setatualizaExecutores(atualizaExecutores + 1);
-      alert("Executor cadastrado com sucesso!");
+      setListaEmpresas(listaEmpresasLocal);
+      setAtualizaEmpresas = atualizaEmpresas + 1;
+      alert("Empresa cadastrada com sucesso!");
       setShowElement(false);
     } catch (error) {
-      console.error("Ocorreu um erro ao cadastrar o executor:", error);
+      console.error("Ocorreu um erro ao cadastrar a empresa:", error);
     }
   }
 
@@ -97,7 +97,7 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
           <CloseButton onClick={handleClick}>
             <img src={CloseIcon} alt="" />
           </CloseButton>
-          <h2>Cadastrar Executor</h2>
+          <h2>Cadastrar Empresa</h2>
 
           <Container>
             <LeftContent>
@@ -134,4 +134,4 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   );
 }
 
-export default FormExecutor;
+export default FormEmpresa;
