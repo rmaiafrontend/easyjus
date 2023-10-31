@@ -70,7 +70,7 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
 
       const storage = getStorage();
       for (const docItem of diligencia.docs) {
-        const storageRef = ref(storage, `docs/${diligencia.firestoreId}/${docItem.name}`);
+        const storageRef = ref(storage, `users/${user.uid}/docs/${diligencia.firestoreId}/${docItem.name}`);
         await deleteObject(storageRef);
       }
       return true;
@@ -83,6 +83,7 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
   async function handleDeleteDiligencia() {
     const removedFromFirestore = await removeDiligenciaFromFirestore(selectedDiligencia);
     if (removedFromFirestore) {
+      console.log(selectedDiligencia);
       const removedFromStorage = await removeDiligenciaFromStorage(selectedDiligencia.firestoreId);
       if (removedFromStorage) {
         removeDiligenciaFromLocalStorage(selectedDiligencia);

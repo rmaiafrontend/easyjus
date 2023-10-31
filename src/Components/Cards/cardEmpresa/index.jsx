@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Card, Top, Main, Button, Image, Right, Infos, ButtonDelete, InfosList } from "./style";
 import userIcon from "../../../assets/userIcon.svg";
 
@@ -8,16 +7,16 @@ export function CardEmpresa(props) {
   return (
     <Card>
       <Top>
-        <Image backgroundImage={backgroundUrl || userIcon}></Image>
+        <Image backgroundimage={backgroundUrl || userIcon}></Image>
 
         <Right>
           <Infos>
             <span className="nums">18</span>
-            <span className="title">Diligências executadas</span>
+            <span className="title">Diligências solicitadas</span>
           </Infos>
           <Infos>
             <span className="nums">16</span>
-            <span className="title">Pagamentos recebidos</span>
+            <span className="title">Pagamentos efetuados</span>
           </Infos>
         </Right>
       </Top>
@@ -40,7 +39,7 @@ export function CardEmpresa(props) {
         </InfosList>
       </Main>
       <Button>Mais informações</Button>
-      <ButtonDelete onClick={() => props.handleDeleteExecutor(props.id)}>Excluir Empresa</ButtonDelete>
+      <ButtonDelete onClick={() => props.handleDeleteEmpresa(props.id)}>Excluir Empresa</ButtonDelete>
     </Card>
   );
 }

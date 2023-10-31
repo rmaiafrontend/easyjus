@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
-  padding: 0px 30px 0 30px;
-  margin: 0 auto;
-`;
-export const MainContent = styled.div``;
-
 export const Titles = styled.div`
   margin-top: 5.2rem;
   span {
@@ -31,10 +24,7 @@ export const Cards = styled.div`
 `;
 
 export const Hero = styled.div`
-  position: relative;
   margin-top: 3rem;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 100%;
 `;

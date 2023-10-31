@@ -11,6 +11,10 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   const { user, dispatch } = useContext(AuthContext);
   const storage = getStorage();
 
+  // Adicione o executor à lista de executores no localStorage ao ser cadastrado
+  const localStorageData = localStorage.getItem("listaExecutores");
+  const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
@@ -30,10 +34,10 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   }
 
   useEffect(() => {
-    // Carregue a lista de executores do localStorage ao montar o componente
-    const localStorageData = localStorage.getItem("listaExecutores");
-    const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    setListaExecutores(listaExecutoresLocal);
+    // // Carregue a lista de executores do localStorage ao montar o componente
+    // const localStorageData = localStorage.getItem("listaExecutores");
+    // const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
+    // setListaExecutores(listaExecutoresLocal);
   }, []);
 
   async function submitForm(event) {
@@ -72,16 +76,12 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
       const docRef = await addDoc(executoresRef, docData);
 
       // Adicione o Firestore document ID (firestoreId) ao objeto docData
-      docData.firestoreId = docRef.id;
-      // Adicione o executor à lista de executores no localStorage ao ser cadastrado
-      const localStorageData = localStorage.getItem("listaExecutores");
-      const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-      localStorage.setItem("listaExecutores", JSON.stringify(listaExecutoresLocal));
+      docData.id = docRef.id;
 
       listaExecutoresLocal.unshift(docData);
 
-      // Atualize o estado com a nova lista de executores
-      setListaExecutores(listaExecutoresLocal);
+      await localStorage.setItem("listaExecutores", JSON.stringify(listaExecutoresLocal));
+
       setatualizaExecutores(atualizaExecutores + 1);
       alert("Executor cadastrado com sucesso!");
       setShowElement(false);

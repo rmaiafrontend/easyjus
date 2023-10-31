@@ -19,7 +19,7 @@ export const Image = styled.div`
   width: 9.1rem;
   height: 9.1rem;
   border-radius: 1rem;
-  background-image: ${(props) => `url(${props.backgroundImage})`};
+  background-image: ${(props) => `url(${props.backgroundimage})`};
   background-size: cover;
 `;
 export const Right = styled.div`

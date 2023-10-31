@@ -11,12 +11,15 @@ const fadeIn = keyframes`
 `;
 
 export const Overlay = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  z-index: 999; /* Coloca o overlay acima de outros elementos */
   background: rgb(0 0 0 / 14%);
   backdrop-filter: blur(1.5px);
   animation: ${fadeIn} 0.1s ease-in-out;

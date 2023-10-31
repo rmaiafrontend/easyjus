@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { ContainerEmpresas } from "./Style";
+import { Container } from "./Style";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
@@ -34,24 +34,24 @@ export function ListEmpresas({ setAtualizaEmpresas, atualizaEmpresas }) {
     }
   }
 
-  async function handleDeleteExecutor(id) {
-    console.log("chamou a função!");
-    const removedFromFirestore = await removeExecutorFromFirestore(id);
+  async function handleDeleteEmpresa(id) {
+    console.log("chamou a função!", id);
+    const removedFromFirestore = await removeEmpresaFromFirestore(id);
     if (removedFromFirestore) {
-      const removedFromStorage = await removeExecutorFromLocalStorage(id);
+      const removedFromStorage = await removeEmpresaFromLocalStorage(id);
     }
   }
 
-  async function removeExecutorFromLocalStorage(id) {
+  async function removeEmpresaFromLocalStorage(id) {
     const localStorageData = localStorage.getItem("listaEmpresas");
     const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    const novasEmpresasLocal = listaEmpresasLocal.filter((d) => d.firestoreId !== id);
+    const novasEmpresasLocal = listaEmpresasLocal.filter((d) => d.id !== id);
     localStorage.setItem("listaEmpresas", JSON.stringify(novasEmpresasLocal));
     setListaEmpresas(novasEmpresasLocal);
-    // setAtualizaEmpresas(atualizaEmpresas + 1);
+    setAtualizaEmpresas(atualizaEmpresas + 1);
   }
 
-  async function removeExecutorFromFirestore(id) {
+  async function removeEmpresaFromFirestore(id) {
     try {
       await deleteDoc(doc(empresasRef, id)); // Usando a nova referência diligenciasRef
       return true;
@@ -63,11 +63,11 @@ export function ListEmpresas({ setAtualizaEmpresas, atualizaEmpresas }) {
 
   return (
     <>
-      <ContainerEmpresas>
+      <Container>
         {listaEmpresas.map((item) => (
-          <CardEmpresa key={item.firestoreId} {...item} handleDeleteExecutor={handleDeleteExecutor} />
+          <CardEmpresa key={item.id} {...item} handleDeleteEmpresa={handleDeleteEmpresa} />
         ))}
-      </ContainerEmpresas>
+      </Container>
     </>
   );
 }

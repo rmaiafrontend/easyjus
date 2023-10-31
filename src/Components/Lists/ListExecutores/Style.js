@@ -7,4 +7,5 @@ export const ContainerExecutores = styled.div`
   gap: 16px;
   justify-content: space-around;
   align-items: stretch;
+  margin-bottom: 50px;
 `;

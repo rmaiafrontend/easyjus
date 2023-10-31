@@ -110,7 +110,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
   const handleDeleteFile = async (file) => {
     // Crie uma referência para o arquivo no Storage
     const storage = getStorage();
-    const storageRef = ref(storage, `docs/${diligencia.firestoreId}/${file.name}`);
+    const storageRef = ref(storage, `users/${user.uid}/docs/${diligencia.firestoreId}/${file.name}`);
 
     try {
       // Delete o arquivo do Storage

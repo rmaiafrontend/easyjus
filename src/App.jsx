@@ -25,15 +25,21 @@ function App() {
           {user ? (
             <>
               <div className="container">
-                <SideBar />
-                <Routes>
-                  <Route path="*" element={<SectionDashboard />} />
-                  <Route path="/" element={<SectionDashboard />} />
-                  <Route path="/dashboard" element={<SectionDashboard />} />
-                  <Route path="/diligencias" element={<SectionDiligencias />} />
-                  <Route path="/executores" element={<SectionExcutores />} />
-                  <Route path="/empresas" element={<SectionEmpresas />} />
-                </Routes>
+                <div className="left-content">
+                  <div className="containerBar">
+                    <SideBar />
+                  </div>
+                </div>
+                <div className="right-content">
+                  <Routes>
+                    <Route path="*" element={<SectionDashboard />} />
+                    <Route path="/" element={<SectionDashboard />} />
+                    <Route path="/dashboard" element={<SectionDashboard />} />
+                    <Route path="/diligencias" element={<SectionDiligencias />} />
+                    <Route path="/executores" element={<SectionExcutores />} />
+                    <Route path="/empresas" element={<SectionEmpresas />} />
+                  </Routes>
+                </div>
               </div>
             </>
           ) : (

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Card, Top, Main, Button, Image, Right, Infos, ButtonDelete, InfosList } from "./style";
 import userIcon from "../../../assets/userIcon.svg";
 
@@ -8,7 +7,7 @@ export function CardExecutor(props) {
   return (
     <Card>
       <Top>
-        <Image backgroundImage={backgroundUrl || userIcon}></Image>
+        <Image backgroundimage={backgroundUrl || userIcon}></Image>
 
         <Right>
           <Infos>

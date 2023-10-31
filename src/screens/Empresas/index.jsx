@@ -6,23 +6,18 @@ import { useState } from "react";
 
 export function SectionEmpresas() {
   const [showElement, setShowElement] = useState(false);
-  const [atualizaEmpresas, setatualizaEmpresas] = useState(0);
+  const [atualizaEmpresas, setAtualizaEmpresas] = useState(0);
   return (
     <>
-      <AllContent>
-        <MainContent>
-          <Container>
-            <Buttons>
-              <CadastraEmpresa setShowElement={setShowElement} />
-            </Buttons>
-            <Cards>
-              <h2>Todos as empresas</h2>
-              <ListEmpresas atualizaEmpresas={atualizaEmpresas} setatualizaEmpresas={setatualizaEmpresas} />
-            </Cards>
-          </Container>
-        </MainContent>
-        {showElement && <FormEmpresa atualizaEmpresas={atualizaEmpresas} setatualizaEmpresas={setatualizaEmpresas} setShowElement={setShowElement} />}
-      </AllContent>
+      <Buttons>
+        <CadastraEmpresa setShowElement={setShowElement} />
+      </Buttons>
+      <Cards>
+        <h2>Todos as empresas</h2>
+        <ListEmpresas atualizaEmpresas={atualizaEmpresas} setAtualizaEmpresas={setAtualizaEmpresas} />
+      </Cards>
+
+      {showElement && <FormEmpresa atualizaEmpresas={atualizaEmpresas} setAtualizaEmpresas={setAtualizaEmpresas} setShowElement={setShowElement} />}
     </>
   );
 }

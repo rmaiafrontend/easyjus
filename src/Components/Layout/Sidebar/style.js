@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 export const Bar = styled.div`
-  margin: 20px;
+  height: 100%; /* Altura da barra lateral */
+  position: fixed;
+
+  /* margin: 20px; */
   border-radius: 15px 0 0 15px;
   width: 290px;
-  height: 100vh;
+
   padding-top: 5.2rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-
   background-color: #fff;
 `;
 

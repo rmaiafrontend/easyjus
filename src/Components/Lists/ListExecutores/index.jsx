@@ -35,7 +35,7 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   }
 
   async function handleDeleteExecutor(id) {
-    console.log("chamou a função!");
+    console.log("chamou a função!", id);
     const removedFromFirestore = await removeExecutorFromFirestore(id);
     if (removedFromFirestore) {
       const removedFromStorage = await removeExecutorFromLocalStorage(id);
@@ -45,7 +45,7 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   async function removeExecutorFromLocalStorage(id) {
     const localStorageData = localStorage.getItem("listaExecutores");
     const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    const novosExecutoresLocal = listaExecutoresLocal.filter((d) => d.firestoreId !== id);
+    const novosExecutoresLocal = listaExecutoresLocal.filter((d) => d.id !== id);
     localStorage.setItem("listaExecutores", JSON.stringify(novosExecutoresLocal));
     setListaExecutores(novosExecutoresLocal);
     setatualizaExecutores(atualizaExecutores + 1);
@@ -65,7 +65,7 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
     <>
       <ContainerExecutores>
         {listaExecutores.map((item) => (
-          <CardExecutor key={item.firestoreId} {...item} handleDeleteExecutor={handleDeleteExecutor} />
+          <CardExecutor key={item.id} {...item} handleDeleteExecutor={handleDeleteExecutor} />
         ))}
       </ContainerExecutores>
     </>

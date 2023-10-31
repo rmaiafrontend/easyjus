@@ -49,7 +49,7 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
     };
 
     fetchData(["users", userId, "tipoDiligencia"], setListaTipos);
-    fetchData(["users", userId, "clientes"], setListaClientes);
+    fetchData(["users", userId, "empresas"], setListaClientes);
     fetchData(["users", userId, "executores"], setListaResponsavel);
   }, []);
 
@@ -273,7 +273,7 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
               </Campo>
               <Campo>
                 <Title>
-                  <span>Cliente</span>
+                  <span>Empresa</span>
                 </Title>
                 <Dropdown>
                   <Select type="text" readOnly placeholder="Escolha uma opção" value={cliente} onClick={(event) => toggleButtonCliente(event, "Cliente")} />

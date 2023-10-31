@@ -11,6 +11,10 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
   const { user, dispatch } = useContext(AuthContext);
   const storage = getStorage();
 
+  // Adicione o executor à lista de executores no localStorage ao ser cadastrado
+  const localStorageData = localStorage.getItem("listaEmpresas");
+  const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
@@ -22,19 +26,9 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
   const userRef = doc(db, "users", user.uid); // Crie uma referência ao documento do usuário
   const empresasRef = collection(userRef, "empresas"); // Crie uma referência à subcoleção "diligencias"
 
-  // Estado para armazenar a lista de executores
-  const [listaEmpresas, setListaEmpresas] = useState([]);
-
   function handleClick() {
     setShowElement(false);
   }
-
-  useEffect(() => {
-    // Carregue a lista de executores do localStorage ao montar o componente
-    const localStorageData = localStorage.getItem("listaEmpresas");
-    const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    setListaEmpresas(listaEmpresasLocal);
-  }, []);
 
   async function submitForm(event) {
     try {
@@ -72,17 +66,13 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
       const docRef = await addDoc(empresasRef, docData);
 
       // Adicione o Firestore document ID (firestoreId) ao objeto docData
-      docData.firestoreId = docRef.id;
-      // Adicione o executor à lista de executores no localStorage ao ser cadastrado
-      const localStorageData = localStorage.getItem("listaEmpresas");
-      const listaEmpresasLocal = localStorageData ? JSON.parse(localStorageData) : [];
-      localStorage.setItem("listaEmpresas", JSON.stringify(listaEmpresasLocal));
+      docData.id = docRef.id;
 
       listaEmpresasLocal.unshift(docData);
 
-      // Atualize o estado com a nova lista de executores
-      setListaEmpresas(listaEmpresasLocal);
-      setAtualizaEmpresas = atualizaEmpresas + 1;
+      localStorage.setItem("listaEmpresas", JSON.stringify(listaEmpresasLocal));
+
+      setAtualizaEmpresas(atualizaEmpresas + 1);
       alert("Empresa cadastrada com sucesso!");
       setShowElement(false);
     } catch (error) {
