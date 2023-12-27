@@ -7,6 +7,7 @@ export const AllContent = styled.div`
 `;
 export const MainContent = styled.div`
   width: 100%;
+  height: 1080px;
 `;
 export const Container = styled.div`
   width: 100%;

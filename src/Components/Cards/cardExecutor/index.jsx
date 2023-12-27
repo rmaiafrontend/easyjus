@@ -4,6 +4,10 @@ import userIcon from "../../../assets/userIcon.svg";
 export function CardExecutor(props) {
   const backgroundUrl = props.profileFoto ? props.profileFoto.downloadURL : null;
 
+  function handleClick() {
+    props.setShowInfosExecutor(true);
+    props.setSelectedExecutor(props);
+  }
   return (
     <Card>
       <Top>
@@ -38,7 +42,7 @@ export function CardExecutor(props) {
           </li>
         </InfosList>
       </Main>
-      <Button>Mais informações</Button>
+      <Button onClick={handleClick}>Mais informações</Button>
       <ButtonDelete onClick={() => props.handleDeleteExecutor(props.id)}>Excluir Executor</ButtonDelete>
     </Card>
   );

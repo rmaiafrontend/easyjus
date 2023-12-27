@@ -152,6 +152,8 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
         cliente: clienteValue,
         valor: valorValue,
         status: "Pendente",
+        pagamentoExecutor: false,
+        pagamentoEmpresa: false,
         docs: [],
       };
 

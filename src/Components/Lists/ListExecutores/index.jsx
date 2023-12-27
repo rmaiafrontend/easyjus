@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import { CardExecutor } from "../../Cards/cardExecutor";
+import { InfosExecutor } from "../../Cards/infosExecutor";
 
 export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   const { user, dispatch } = useContext(AuthContext);
@@ -11,6 +12,8 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   const executoresRef = collection(userRef, "executores"); // Crie uma referência à subcoleção "diligencias"
 
   const [listaExecutores, setListaExecutores] = useState([]);
+  const [showInfosExecutor, setShowInfosExecutor] = useState(false);
+  const [selectedExecutor, setSelectedExecutor] = useState();
 
   useEffect(() => {
     getExecutores();
@@ -65,8 +68,9 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
     <>
       <ContainerExecutores>
         {listaExecutores.map((item) => (
-          <CardExecutor key={item.id} {...item} handleDeleteExecutor={handleDeleteExecutor} />
+          <CardExecutor key={item.id} {...item} handleDeleteExecutor={handleDeleteExecutor} setShowInfosExecutor={setShowInfosExecutor} setSelectedExecutor={setSelectedExecutor} />
         ))}
+        {showInfosExecutor && <InfosExecutor setShowInfosExecutor={setShowInfosExecutor} selectedExecutor={selectedExecutor} />}
       </ContainerExecutores>
     </>
   );
