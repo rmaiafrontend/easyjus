@@ -43,8 +43,8 @@ export const LeftContent = styled.div`
     font-weight: 700;
   }
   .periodo {
-    font-size: 8px;
-    font-weight: 400;
+    font-size: 10px;
+    font-weight: 600;
     letter-spacing: 1.5px;
     color: #4e4e4e;
   }

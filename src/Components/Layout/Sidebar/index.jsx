@@ -41,10 +41,10 @@ export function SideBar() {
           {[
             { icon: iconExecutores, text: "Dashboard", path: "/" },
             { icon: iconDiligencia, text: "Diligências", path: "/diligencias" },
+            { icon: iconFinanceiro, text: "Agenda", path: "/agenda" },
             { icon: iconExecutores, text: "Executores", path: "/executores" },
             { icon: iconEmpresas, text: "Empresas", path: "/empresas" },
             { icon: iconFinanceiro, text: "Financeiro", path: "/financeiro" },
-            { icon: iconConfig, text: "Configurações", path: "/configuracoes" },
           ].map((item, index) => (
             <ItemMenu key={index}>
               <button onClick={() => handleButtonClick(item.path)} className={currentPath === item.path ? "active" : ""}>

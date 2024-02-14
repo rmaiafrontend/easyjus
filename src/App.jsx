@@ -12,6 +12,8 @@ import { SectionDashboard } from "./screens/Home/index";
 import { SectionRegister } from "./screens/Register";
 import { SectionLogin } from "./screens/Login";
 import { SectionEmpresas } from "./screens/Empresas";
+import { SectionFinanceiro } from "./screens/Financeiro";
+import { SectionAgenda } from "./screens/Agenda";
 
 import { useAuthContext } from "./hooks/useAuthContext";
 
@@ -38,6 +40,8 @@ function App() {
                     <Route path="/diligencias" element={<SectionDiligencias />} />
                     <Route path="/executores" element={<SectionExcutores />} />
                     <Route path="/empresas" element={<SectionEmpresas />} />
+                    <Route path="/financeiro" element={<SectionFinanceiro />} />
+                    <Route path="/agenda" element={<SectionAgenda />} />
                   </Routes>
                 </div>
               </div>

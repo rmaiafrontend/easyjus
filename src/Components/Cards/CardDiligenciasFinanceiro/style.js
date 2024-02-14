@@ -5,13 +5,12 @@ export const Card = styled.div`
   width: 100%;
   max-width: 25.7rem;
   height: 9.7rem;
-  background: transparent;
+  background: #ffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 1s;
   border-radius: 20px;
-  border: 1px solid #b2b2b2;
   &:hover {
     transform: scale(1.03);
   }
@@ -31,14 +30,14 @@ export const LeftContent = styled.div`
   justify-content: center;
   padding: 12px 0 14px 21px;
   .title {
+    color: #4e4e4e;
+    font-family: DM Sans;
     font-size: 18px;
-    font-style: normal;
+
     font-weight: 400;
-    line-height: 24px; /* 133.333% */
-    letter-spacing: -0.36px;
   }
   .numero {
-    color: ${(props) => props.color || "black"};
+    color: #5232ff;
     font-size: 30px;
     font-weight: 700;
   }

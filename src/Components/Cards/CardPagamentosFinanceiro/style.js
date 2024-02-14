@@ -5,13 +5,12 @@ export const Card = styled.div`
   width: 100%;
   max-width: 25.7rem;
   height: 9.7rem;
-  background: transparent;
+  background: #ffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 1s;
   border-radius: 20px;
-  border: 1px solid #b2b2b2;
   &:hover {
     transform: scale(1.03);
   }

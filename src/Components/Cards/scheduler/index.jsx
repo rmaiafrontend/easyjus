@@ -1,19 +1,30 @@
-import { Scheduler } from "@aldabil/react-scheduler";
+import React from "react";
+import { startOfWeek, addDays, format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
-<Scheduler
-  view="month"
-  events={[
-    {
-      event_id: 1,
-      title: "Event 1",
-      start: new Date("2021/5/2 09:30"),
-      end: new Date("2021/5/2 10:30"),
-    },
-    {
-      event_id: 2,
-      title: "Event 2",
-      start: new Date("2021/5/4 10:00"),
-      end: new Date("2021/5/4 11:00"),
-    },
-  ]}
-/>;
+export function WeekSchedule() {
+  // Obtém a data atual
+  const currentDate = new Date();
+
+  // Obtém o início da semana atual, garantindo que seja sempre segunda-feira
+  const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 1 }); // O parâmetro 1 indica segunda-feira
+
+  // Filtra apenas os dias úteis (segunda a sexta-feira)
+  const workDays = Array.from({ length: 5 }, (_, index) => addDays(startOfCurrentWeek, index));
+
+  return (
+    <div>
+      <h1>Semana Atual</h1>
+      <div style={{ display: "flex" }}>
+        {workDays.map((day, index) => (
+          <div key={index}>
+            <h2>{format(day, "EEEE", { locale: ptBR })}</h2>
+            <p>{format(day, "dd/MM")}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default WeekSchedule;

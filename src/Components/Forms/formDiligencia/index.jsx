@@ -18,8 +18,11 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
   const [interessada, setInteressada] = useState("");
   const [contraria, setContraria] = useState("");
   const [responsavel, setResponsavel] = useState("");
+  const [idResponsavel, setIdResponsavel] = useState("");
   const [cliente, setCliente] = useState("");
+  const [idCliente, setIdCliente] = useState();
   const [valor, setValor] = useState("");
+  const [comissaoExecutor, setComissaoExecutor] = useState();
 
   const [isActiveTipo, setIsActiveTipo] = useState(false);
   const [isActiveResponsavel, setIsActiveResponsavel] = useState(false);
@@ -69,13 +72,15 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
 
   function changeOption(option, campo) {
     if (campo === "Cliente") {
-      setCliente(option);
+      setCliente(option.nome);
+      setIdCliente(option.id);
       setIsActiveCliente(false);
     } else if (campo === "Tipo") {
       setTipo(option);
       setIsActiveTipo(false);
     } else if (campo === "Responsavel") {
-      setResponsavel(option);
+      setResponsavel(option.nome);
+      setIdResponsavel(option.id);
       setIsActiveResponsavel(false);
     }
   }
@@ -129,8 +134,11 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
       const interessadaValue = interessada;
       const contrariaValue = contraria;
       const responsavelValue = responsavel;
+      const idResponsavelValue = idResponsavel;
       const clienteValue = cliente;
+      const idClienteValue = idCliente;
       const valorValue = parseInt(valor);
+      const comissaoExecutorValue = parseInt(comissaoExecutor);
 
       // Converter o formato da data
       const dataForm = await converterFormatoData(dataValue);
@@ -149,8 +157,11 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
         parteInteressada: interessadaValue,
         parteContraria: contrariaValue,
         responsavel: responsavelValue,
+        idResponsavel: idResponsavelValue,
         cliente: clienteValue,
+        idCliente: idClienteValue,
         valor: valorValue,
+        comissaoExecutor: comissaoExecutorValue,
         status: "Pendente",
         pagamentoExecutor: false,
         pagamentoEmpresa: false,
@@ -265,7 +276,7 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                   {isActiveResponsavel && (
                     <Options>
                       {listaResponsavel.map((item) => (
-                        <li key={item.id} onClick={() => changeOption(item.nome, "Responsavel")}>
+                        <li key={item.id} onClick={() => changeOption(item, "Responsavel")}>
                           {item.nome}
                         </li>
                       ))}
@@ -282,7 +293,7 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                   {isActiveCliente && (
                     <Options>
                       {listaClientes.map((item) => (
-                        <li key={item.id} onClick={() => changeOption(item.nome, "Cliente")}>
+                        <li key={item.id} onClick={() => changeOption(item, "Cliente")}>
                           {item.nome}
                         </li>
                       ))}
@@ -294,7 +305,13 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                 <Title>
                   <span>Valor</span>
                 </Title>
-                <Input type="number" placeholder={"Ex: 150,00"} value={valor} onChange={(e) => setValor(e.target.value)} />
+                <Input type="number" step="0.00" placeholder={"Ex: 150,00"} value={valor} onChange={(e) => setValor(e.target.value)} />
+              </Campo>
+              <Campo>
+                <Title>
+                  <span>Comissão executor</span>
+                </Title>
+                <Input type="number" step="0.00" placeholder={"Ex: 50,00"} value={comissaoExecutor} onChange={(e) => setComissaoExecutor(e.target.value)} />
               </Campo>
             </RightContent>
           </Container>

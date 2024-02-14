@@ -103,7 +103,6 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
     if (localStorageData) {
       const diligenciasData = JSON.parse(localStorageData);
       setListaDiligencias(diligenciasData);
-      console.log(listaDiligencias);
     } else {
       const unsubscribe = onSnapshot(diligenciasRef, (snapshot) => {
         // Usando a nova referência diligenciasRef

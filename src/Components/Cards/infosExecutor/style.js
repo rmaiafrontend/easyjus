@@ -229,7 +229,7 @@ export const Status = styled.div`
 export const ListDiligenciasExecutor = styled.div`
   width: 100%;
   height: 100%;
-  max-height: 33.7rem;
+  max-height: 26.7rem;
   overflow-y: auto;
   /* Estilizando a barra de rolagem */
   /* Estilizando a barra de rolagem */
@@ -295,7 +295,7 @@ export const LeftContent = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: -45px;
+  top: -14px;
   right: 0px;
   width: 35px;
   height: 35px;
