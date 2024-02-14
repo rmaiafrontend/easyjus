@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { TopContent, Title, BoxCard, MainContent, FilterContainer, BoxExtrato, Titles, TableEntradas, TableSaidas, Identificadores, BoxSaldo } from "./Style";
+import { TopContent, Title, BoxCard, MainContent, FilterContainer, BoxExtrato, Titles, TableEntradas, TableSaidas, Identificadores, BoxSaldo } from "./style";
 import { CardExtrato } from "../../Components/Cards/CardExtrato";
 import { CardPagamentosFinanceiro } from "../../Components/Cards/CardPagamentosFinanceiro";
 import { CardDiligenciasFinanceiro } from "../../Components/Cards/CardDiligenciasFinanceiro";
