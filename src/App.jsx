@@ -14,6 +14,7 @@ import { SectionLogin } from "./screens/Login";
 import { SectionEmpresas } from "./screens/Empresas";
 import { SectionFinanceiro } from "./screens/Financeiro";
 import { SectionAgenda } from "./screens/Agenda";
+import { SectionResetPassword } from "./screens/ResetPassword";
 
 import { useAuthContext } from "./hooks/useAuthContext";
 
@@ -51,6 +52,7 @@ function App() {
               <Route path="/register" element={<SectionRegister />} />
               <Route path="*" element={<SectionLogin />} />
               <Route path="/" element={<SectionLogin />} />
+              <Route path="/resetpassword" element={<SectionResetPassword />} />
             </Routes>
           )}
 

@@ -174,6 +174,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
               </div>
             </TopContent>
             <MidContent>
+              <CampoInput label="Comissão Executor" value={diligencia.comissaoExecutor} readOnly="true" />
               <CampoInput label="Parte Interessada" value={diligencia.parteInteressada} readOnly="true" />
               <CampoInput label="Parte Contrária" value={diligencia.parteContraria} readOnly="true" />
               <CampoInput label="Responsável" value={diligencia.responsavel} readOnly="true" />

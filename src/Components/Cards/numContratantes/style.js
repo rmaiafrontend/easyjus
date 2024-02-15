@@ -42,9 +42,9 @@ export const LeftContent = styled.div`
     color: ${(props) => props.theme.colors.purpleText};
   }
   .periodo {
-    font-size: 8px;
+    font-size: 9px;
     font-weight: 200;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
     color: ${(props) => props.theme.colors.purpleText};
   }
 `;

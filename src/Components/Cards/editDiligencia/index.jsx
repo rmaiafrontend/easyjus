@@ -10,7 +10,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
   const { user, dispatch } = useContext(AuthContext);
   const [numProcesso, setNumProcesso] = useState(diligencia.numeroProcesso);
   const [tipo, setTipo] = useState(diligencia.tipo);
-  const [data, setData] = useState();
+  const [data, setData] = useState(diligencia.data);
   const [cidade, setCidade] = useState(diligencia.cidade);
   const [local, setLocal] = useState(diligencia.local);
   const [hora, setHora] = useState(diligencia.hora);
@@ -19,6 +19,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
   const [responsavel, setResponsavel] = useState(diligencia.responsavel);
   const [cliente, setCliente] = useState(diligencia.cliente);
   const [valor, setValor] = useState(diligencia.valor);
+  const [comissao, setComissao] = useState(diligencia.comissaoExecutor);
 
   const [isActiveTipo, setIsActiveTipo] = useState(false);
   const [isActiveResponsavel, setIsActiveResponsavel] = useState(false);
@@ -33,7 +34,6 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
   const diligenciasRef = collection(userRef, "diligencias"); // Crie uma referência à subcoleção "diligencias"
 
   useEffect(() => {
-    formatDate(diligencia.data);
     const fetchData = async (queryPath, stateSetter) => {
       try {
         const querySnapshot = await getDocs(collection(db, ...queryPath));
@@ -47,9 +47,9 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
       }
     };
 
-    fetchData(["usuários", userId, "tipoDiligencia"], setListaTipos);
-    fetchData(["usuários", userId, "clientes"], setListaClientes);
-    fetchData(["usuários", userId, "executor"], setListaResponsavel);
+    fetchData(["users", userId, "tipoDiligencia"], setListaTipos);
+    fetchData(["users", userId, "empresas"], setListaClientes);
+    fetchData(["users", userId, "executores"], setListaResponsavel);
   }, []);
 
   const toggleButtonTipo = (event) => {
@@ -130,6 +130,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
       const responsavelValue = responsavel;
       const clienteValue = cliente;
       const valorValue = parseInt(valor);
+      const comissaoExecutorValue = parseInt(comissao);
 
       // Converter o formato da data
       const dataForm = await converterFormatoData(dataValue);
@@ -147,6 +148,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
         responsavel: responsavelValue,
         cliente: clienteValue,
         valor: valorValue,
+        comissaoExecutor: comissaoExecutorValue,
         status: "Pendente",
       };
 
@@ -285,6 +287,12 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
                   <span>Valor</span>
                 </Title>
                 <Input type="number" placeholder={"Ex: 150,00"} value={valor} onChange={(e) => setValor(e.target.value)} />
+              </Campo>
+              <Campo>
+                <Title>
+                  <span>Comissão executor</span>
+                </Title>
+                <Input type="number" placeholder={"Ex: 150,00"} value={comissao} onChange={(e) => setComissao(e.target.value)} />
               </Campo>
             </RightContent>
           </Container>

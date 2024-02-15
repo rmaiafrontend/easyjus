@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Content, Form, Input, ButtonCadastrar, ButtonEntrar, ButtonGoogle, ButtonReset, Botton, TopContent, Buttons, Label } from "./style";
@@ -9,17 +9,24 @@ import { useLogin } from "../../../hooks/useLogin";
 
 const provider = new GoogleAuthProvider();
 
-export function AccountForm() {
+export function ResetForm() {
   const { login, isPending, error } = useLogin();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState(""); // Added state for login error
   const navigate = useNavigate();
   const auth = getAuth(app);
 
-  function handleLogin() {
-    login(email, password);
+  function forgotPassword() {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Um e-mail de redefinição foi enviado!");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   }
 
   return (
@@ -27,26 +34,23 @@ export function AccountForm() {
       <Content>
         <TopContent>
           <img className="iconDigital" src={iconDigital} alt="" />
-          <h3>Faça o login ou cadastre-se.</h3>
+          <h3>Digite seu e-mail para enviar um link de redefinição de senha.</h3>
         </TopContent>
         <Form>
-          <p style={{ color: "red" }}>{loginError}</p>
           <Label htmlFor="email">E-mail</Label>
           <Input type="email" id="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Label htmlFor="password">Senha</Label>
-          <Input type="password" id="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </Form>
         <Buttons>
-          <ButtonEntrar title="Entrar" onClick={handleLogin}>
-            Entrar
+          <ButtonEntrar title="Entrar" onClick={forgotPassword}>
+            Enviar e-mail
           </ButtonEntrar>
           {/* <ButtonGoogle onClick={singInGoogle}>Fazer login com Google</ButtonGoogle> */}
           <Botton>
-            <ButtonCadastrar title="Cadastrar" onClick={() => navigate("/register")}>
-              Cadastre-se
+            <ButtonCadastrar title="Cadastrar" onClick={() => navigate("/login")}>
+              Login
             </ButtonCadastrar>
-            <ButtonReset title="Resetar" onClick={() => navigate("/resetpassword")}>
-              Esqueci a senha
+            <ButtonReset title="Resetar" onClick={() => navigate("/register")}>
+              Cadastre-se
             </ButtonReset>
           </Botton>
         </Buttons>

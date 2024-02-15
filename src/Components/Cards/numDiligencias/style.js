@@ -40,9 +40,9 @@ export const LeftContent = styled.div`
     color: #fff;
   }
   .periodo {
-    font-size: 8px;
+    font-size: 9px;
     font-weight: 200;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.5px;
     color: #fff;
   }
 `;

@@ -48,6 +48,7 @@ export function CardDiligencia({
 
   function atualizaInfos(status) {
     setSelectedDiligencia({
+      comissaoExecutor,
       docs,
       firestoreId,
       localId,
