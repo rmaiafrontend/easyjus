@@ -279,16 +279,6 @@ export function SectionFinanceiro() {
 
   return (
     <>
-      <TopContent>
-        <Title>
-          <h1>Financeiro</h1>
-        </Title>
-        <BoxCard>
-          <CardDiligenciasFinanceiro numDiligencias="24" />
-          <CardPagamentosFinanceiro title="Entradas" numero={20} color="#00E7AF" />
-          <CardPagamentosFinanceiro title="Saidas" numero={30} color="#FFB547" />
-        </BoxCard>
-      </TopContent>
       <MainContent>
         <h2>Controle Mensal</h2>
         <FilterContainer>
@@ -332,6 +322,16 @@ export function SectionFinanceiro() {
           </>
           {/* )} */}
         </BoxSaldo>
+        {/* <TopContent>
+          <Title>
+            <h1>Financeiro</h1>
+          </Title>
+          <BoxCard>
+            <CardDiligenciasFinanceiro numDiligencias="24" />
+            <CardPagamentosFinanceiro title="Entradas" numero={20} color="#00E7AF" />
+            <CardPagamentosFinanceiro title="Saidas" numero={30} color="#FFB547" />
+          </BoxCard>
+        </TopContent> */}
       </MainContent>
     </>
   );
