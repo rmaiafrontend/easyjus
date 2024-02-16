@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Dropdown, Select, Options, Top } from "./style";
 import Arrow from "../../../assets/arrow-baixo.svg";
 
-export function CustomDropdownMes({ mesSelecionado, setMesSelecionado, setIndexMes }) {
+export function DropdownMesExecutor({ mesSelecionado, setMesSelecionado, setIndexMes }) {
   const [listaMeses, setListaMeses] = useState([
     { mes: "Janeiro" },
     { mes: "Fevereiro" },
@@ -36,9 +36,6 @@ export function CustomDropdownMes({ mesSelecionado, setMesSelecionado, setIndexM
     <Dropdown>
       <Top>
         <Select readOnly type="text" placeholder="Escolha uma opção" value={mesSelecionado} onClick={toggleDropdown} />
-        <button onClick={toggleDropdown}>
-          <img src={Arrow} alt="" />
-        </button>
       </Top>
 
       {isActive && (

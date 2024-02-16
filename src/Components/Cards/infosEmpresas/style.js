@@ -118,8 +118,8 @@ export const FilterPeriodo = styled.div`
   span {
     margin-right: 2.1rem;
     color: var(--secondary-grey-900, #2b3674);
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 42px; /* 233.333% */
     letter-spacing: -0.36px;
   }
@@ -140,7 +140,7 @@ export const FilterStatus = styled.div`
 `;
 
 export const ButtonsPeriodo = styled.div`
-  width: 20.6rem;
+  width: 150px;
   height: 25px;
   display: flex;
   align-items: center;
@@ -233,6 +233,11 @@ export const ListDiligenciasExecutor = styled.div`
   overflow-y: auto;
   /* Estilizando a barra de rolagem */
   /* Estilizando a barra de rolagem */
+  p {
+    font-size: 12px;
+    text-align: center;
+    color: red;
+  }
   &::-webkit-scrollbar {
     width: 8px;
   }

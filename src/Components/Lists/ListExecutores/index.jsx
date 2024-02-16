@@ -5,6 +5,7 @@ import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import { CardExecutor } from "../../Cards/cardExecutor";
 import { InfosExecutor } from "../../Cards/infosExecutor";
+import { InfosExecutorNew } from "../../Cards/infosExecutor copy";
 
 export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   const { user, dispatch } = useContext(AuthContext);
@@ -70,7 +71,7 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
         {listaExecutores.map((item) => (
           <CardExecutor key={item.id} {...item} handleDeleteExecutor={handleDeleteExecutor} setShowInfosExecutor={setShowInfosExecutor} setSelectedExecutor={setSelectedExecutor} />
         ))}
-        {showInfosExecutor && <InfosExecutor setShowInfosExecutor={setShowInfosExecutor} selectedExecutor={selectedExecutor} />}
+        {showInfosExecutor && <InfosExecutorNew setShowInfosExecutor={setShowInfosExecutor} selectedExecutor={selectedExecutor} />}
       </ContainerExecutores>
     </>
   );

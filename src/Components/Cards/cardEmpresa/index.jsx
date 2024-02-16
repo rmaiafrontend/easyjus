@@ -4,11 +4,15 @@ import userIcon from "../../../assets/userIcon.svg";
 export function CardEmpresa(props) {
   const backgroundUrl = props.profileFoto ? props.profileFoto.downloadURL : null;
 
+  function handleClick() {
+    props.setShowInfosEmpresa(true);
+    props.setSelectedEmpresa(props);
+  }
+
   return (
     <Card>
       <Top>
         <Image backgroundimage={backgroundUrl || userIcon}></Image>
-
         <Right>
           <Infos>
             <span className="nums">18</span>
@@ -38,7 +42,7 @@ export function CardEmpresa(props) {
           </li>
         </InfosList>
       </Main>
-      <Button>Mais informações</Button>
+      <Button onClick={handleClick}>Mais informações</Button>
       <ButtonDelete onClick={() => props.handleDeleteEmpresa(props.id)}>Excluir Empresa</ButtonDelete>
     </Card>
   );

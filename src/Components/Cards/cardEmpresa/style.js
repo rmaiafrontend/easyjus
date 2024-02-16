@@ -4,7 +4,7 @@ import PhotoExecutor from "../../../assets/photo-executor.png";
 export const Card = styled.div`
   padding: 16px;
   width: 100%;
-  height: 32rem;
+  height: auto;
   background-color: #fff;
   box-shadow: -12px 32px 28px 0px rgba(0, 0, 0, 0.05);
   border-radius: 1.5rem;
@@ -46,6 +46,7 @@ export const Infos = styled.div`
   }
 `;
 export const Main = styled.div`
+  height: 13.5rem;
   margin-top: 1.4rem;
   h4 {
     font-size: 23.33px;

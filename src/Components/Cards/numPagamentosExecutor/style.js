@@ -39,8 +39,8 @@ export const LeftContent = styled.div`
   }
   .numero {
     color: ${(props) => props.color || "black"};
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
   }
   .periodo {
     font-size: 10px;

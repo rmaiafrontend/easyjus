@@ -6,7 +6,9 @@ import { CardPagamentosFinanceiro } from "../../Components/Cards/CardPagamentosF
 import { CardDiligenciasFinanceiro } from "../../Components/Cards/CardDiligenciasFinanceiro";
 import { CustomDropdownMes } from "../../Components/Layout/DropdownMes";
 import { db } from "../../services/firebaseconfig";
-import { doc, updateDoc, addDoc, collection, deleteDoc, query, where, getDocs } from "firebase/firestore";
+import { doc, collection, getDocs } from "firebase/firestore";
+import { format, getMonth } from "date-fns"; // Certifique-se de que está importando 'format' corretamente
+import { ptBR } from "date-fns/locale";
 
 export function SectionFinanceiro() {
   const { user, dispatch } = useContext(AuthContext);
@@ -15,22 +17,8 @@ export function SectionFinanceiro() {
   const clientesRef = collection(userRef, "empresas");
   const executorRef = collection(userRef, "executores");
 
-  const [listaMeses, setListaMeses] = useState([
-    { mes: "Janeiro" },
-    { mes: "Fevereiro" },
-    { mes: "Março" },
-    { mes: "Abril" },
-    { mes: "Maio" },
-    { mes: "Junho" },
-    { mes: "Julho" },
-    { mes: "Agosto" },
-    { mes: "Setembro" },
-    { mes: "Outubro" },
-    { mes: "Novembro" },
-    { mes: "Dezembro" },
-  ]);
   const [mesSelecionado, setMesSelecionado] = useState();
-  const [indexMes, setIndexMes] = useState();
+  const [indexMes, setIndexMes] = useState(2);
 
   const [listaClientes, setListaClientes] = useState([]);
   const [listaExecutores, setListaExecutores] = useState([]);
@@ -44,6 +32,16 @@ export function SectionFinanceiro() {
   const [filtroExcutor, setFiltroExecutor] = useState(false);
 
   const [saldo, setSaldo] = useState(0);
+
+  useEffect(() => {
+    const currentMonth = new Date();
+    const monthIndex = getMonth(currentMonth);
+    const titleMonth = format(currentMonth, "MMMM", { locale: ptBR });
+    const formattedMonthCapitalized = titleMonth.charAt(0).toUpperCase() + titleMonth.slice(1);
+    console.log(titleMonth, monthIndex);
+    setMesSelecionado(formattedMonthCapitalized);
+    setIndexMes(monthIndex + 1);
+  }, []);
 
   useEffect(() => {
     setFetchEmpresas(false);
@@ -294,7 +292,7 @@ export function SectionFinanceiro() {
       <MainContent>
         <h2>Controle Mensal</h2>
         <FilterContainer>
-          <CustomDropdownMes setIndexMes={setIndexMes} options={listaMeses} mesSelecionado={mesSelecionado} setMesSelecionado={setMesSelecionado}></CustomDropdownMes>
+          <CustomDropdownMes setIndexMes={setIndexMes} mesSelecionado={mesSelecionado} setMesSelecionado={setMesSelecionado}></CustomDropdownMes>
         </FilterContainer>
         <Titles>
           <div className="entradas">

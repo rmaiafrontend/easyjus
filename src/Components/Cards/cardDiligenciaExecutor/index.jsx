@@ -4,7 +4,7 @@ import { db } from "../../../services/firebaseconfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-export function CardDiligenciaExecutor({ atualizaInfos, setAtualizaInfos, firestoreId, pagamentoExecutor, setShowInfos, tipo, cliente, data, local, cidade, valor }) {
+export function CardDiligenciaExecutor({ firestoreId, pagamentoExecutor, setShowInfos, tipo, cliente, data, local, cidade, valor }) {
   const [currentStatus, setCurrentStatus] = useState(pagamentoExecutor);
   const { user, dispatch } = useContext(AuthContext);
 
@@ -55,7 +55,6 @@ export function CardDiligenciaExecutor({ atualizaInfos, setAtualizaInfos, firest
       // Atualize o localStorage com a lista de diligências atualizada
       localStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasLocal));
     }
-    setAtualizaInfos(!atualizaInfos);
   }
 
   return (

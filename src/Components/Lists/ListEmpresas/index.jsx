@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import { CardEmpresa } from "../../Cards/cardEmpresa";
+import { InfosEmpresas } from "../../Cards/infosEmpresas";
 
 export function ListEmpresas({ setAtualizaEmpresas, atualizaEmpresas }) {
   const { user, dispatch } = useContext(AuthContext);
@@ -11,6 +12,8 @@ export function ListEmpresas({ setAtualizaEmpresas, atualizaEmpresas }) {
   const empresasRef = collection(userRef, "empresas"); // Crie uma referência à subcoleção "diligencias"
 
   const [listaEmpresas, setListaEmpresas] = useState([]);
+  const [showInfosEmpresa, setShowInfosEmpresa] = useState(false);
+  const [selectedEmpresa, setSelectedEmpresa] = useState();
 
   useEffect(() => {
     getEmpresas();
@@ -65,8 +68,9 @@ export function ListEmpresas({ setAtualizaEmpresas, atualizaEmpresas }) {
     <>
       <Container>
         {listaEmpresas.map((item) => (
-          <CardEmpresa key={item.id} {...item} handleDeleteEmpresa={handleDeleteEmpresa} />
+          <CardEmpresa key={item.id} {...item} handleDeleteEmpresa={handleDeleteEmpresa} setShowInfosEmpresa={setShowInfosEmpresa} setSelectedEmpresa={setSelectedEmpresa} />
         ))}
+        {showInfosEmpresa && <InfosEmpresas setShowInfosEmpresa={setShowInfosEmpresa} selectedEmpresa={selectedEmpresa} />}
       </Container>
     </>
   );
