@@ -218,13 +218,18 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                 </Title>
                 <Dropdown>
                   <Select readOnly type="text" placeholder="Escolha uma opção" value={tipo} onClick={(event) => toggleButtonTipo(event)} />
+
                   {isActiveTipo && (
                     <Options>
-                      {listaTipos.map((item) => (
-                        <li key={item.id} onClick={() => changeOption(item.tipo, "Tipo")}>
-                          {item.tipo}
-                        </li>
-                      ))}
+                      {listaTipos.length > 0 ? (
+                        listaTipos.map((item) => (
+                          <li key={item.id} onClick={() => changeOption(item.tipo, "Tipo")}>
+                            {item.tipo}
+                          </li>
+                        ))
+                      ) : (
+                        <p style={{ color: "red", fontSize: "12px" }}>Você ainda não cadastrou nenhum tipo.</p>
+                      )}
                     </Options>
                   )}
                 </Dropdown>
@@ -275,11 +280,15 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                   <Select type="text" readOnly placeholder="Escolha uma opção" value={responsavel} onClick={(event) => toggleButtonResponsavel(event, "Responsavel")} />
                   {isActiveResponsavel && (
                     <Options>
-                      {listaResponsavel.map((item) => (
-                        <li key={item.id} onClick={() => changeOption(item, "Responsavel")}>
-                          {item.nome}
-                        </li>
-                      ))}
+                      {listaResponsavel.length > 0 ? (
+                        listaResponsavel.map((item) => (
+                          <li key={item.id} onClick={() => changeOption(item, "Responsavel")}>
+                            {item.nome}
+                          </li>
+                        ))
+                      ) : (
+                        <p style={{ color: "red", fontSize: "12px" }}>Você ainda não cadastrou nenhum responsável.</p>
+                      )}
                     </Options>
                   )}
                 </Dropdown>
@@ -292,11 +301,15 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
                   <Select type="text" readOnly placeholder="Escolha uma opção" value={cliente} onClick={(event) => toggleButtonCliente(event, "Cliente")} />
                   {isActiveCliente && (
                     <Options>
-                      {listaClientes.map((item) => (
-                        <li key={item.id} onClick={() => changeOption(item, "Cliente")}>
-                          {item.nome}
-                        </li>
-                      ))}
+                      {listaClientes.length > 0 ? (
+                        listaClientes.map((item) => (
+                          <li key={item.id} onClick={() => changeOption(item, "Cliente")}>
+                            {item.nome}
+                          </li>
+                        ))
+                      ) : (
+                        <p style={{ color: "red", fontSize: "12px" }}>Você ainda não cadastrou nenhuma empresa.</p>
+                      )}
                     </Options>
                   )}
                 </Dropdown>

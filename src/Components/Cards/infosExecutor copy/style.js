@@ -11,6 +11,14 @@ const fadeIn = keyframes`
   }
 `;
 
+function getStatusColor(status) {
+  if (status === "Pendente") {
+    return "#fe4752";
+  } else {
+    return "#00E7AF";
+  }
+}
+
 export const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -41,6 +49,13 @@ export const Box = styled.div`
     font-weight: 700;
     margin-bottom: 2.5rem;
     color: #2b3674;
+  }
+  h3 {
+    color: var(--secondary-grey-900, #2b3674);
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 42px; /* 168% */
+    letter-spacing: -0.5px;
   }
 `;
 
@@ -83,28 +98,21 @@ export const ListaDeDados = styled.ul`
 `;
 
 export const CardsContainer = styled.div`
-  margin-top: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 `;
 
 export const Line = styled.div`
-  margin: 35px 0;
+  margin: 15px 0;
   width: 663.004px;
   height: 1px;
   background: linear-gradient(90deg, #7a7a7a 10.57%, rgba(122, 122, 122, 0) 100.76%);
 `;
 
-export const ContentDiligencias = styled.div`
-  h3 {
-    color: var(--secondary-grey-900, #2b3674);
-    font-size: 25px;
-    font-weight: 700;
-    line-height: 42px; /* 168% */
-    letter-spacing: -0.5px;
-  }
-`;
+export const ContentDiligencias = styled.div``;
 
 export const Filters = styled.div`
   display: flex;
@@ -115,14 +123,36 @@ export const FilterPeriodo = styled.div`
   margin-right: 5.5rem;
   display: flex;
   align-items: center;
-  span {
-    margin-right: 2.1rem;
-    color: var(--secondary-grey-900, #2b3674);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 42px; /* 233.333% */
-    letter-spacing: -0.36px;
-  }
+`;
+
+export const FilterPagamento = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ButtonStatusPagamento = styled.div`
+  width: 150px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  background-color: ${(props) => getStatusColor(props.status)};
+  color: #ffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500px;
+  cursor: pointer;
+`;
+
+export const TitleFilter = styled.span`
+  margin-right: 2.1rem;
+  color: var(--secondary-grey-900, #2b3674);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 42px; /* 233.333% */
+  letter-spacing: -0.36px;
 `;
 
 export const FilterStatus = styled.div`
@@ -198,13 +228,13 @@ export const TitlesList = styled.div`
 export const Titles = styled.div`
   margin-left: 8px;
   width: 100%;
-  max-width: 81.6rem;
 
   ul {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     li {
+      text-align: center;
       width: 10rem;
       font-size: 14px;
       font-style: normal;
@@ -274,14 +304,7 @@ export const RightContent = styled.div`
     color: #00e7af;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
-  }
-
-  .pendentes {
-    color: #ffc700;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
   }
 `;
 

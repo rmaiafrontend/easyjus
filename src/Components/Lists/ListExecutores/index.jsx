@@ -4,7 +4,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import { CardExecutor } from "../../Cards/cardExecutor";
-import { InfosExecutor } from "../../Cards/infosExecutor";
 import { InfosExecutorNew } from "../../Cards/infosExecutor copy";
 
 export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {

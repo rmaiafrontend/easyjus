@@ -96,7 +96,9 @@ export const BottonContent = styled.div`
     font-family: DM Sans;
     font-size: 12px;
     font-weight: 400;
-    background: rgba(0, 231, 175, 0.29);
+    background-color: transparent;
+    border: 1px solid #0000001f;
+    transition: all 0.6s;
     &:hover {
       background: rgba(0, 231, 175, 0.74);
     }

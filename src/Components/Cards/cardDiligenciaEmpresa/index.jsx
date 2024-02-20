@@ -4,7 +4,7 @@ import { db } from "../../../services/firebaseconfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-export function CardDiligenciaExecutor({ firestoreId, comissaoExecutor, pagamentoExecutor, setShowInfos, tipo, cliente, data, local, cidade, valor }) {
+export function CardDiligenciaEmpresa({ firestoreId, comissaoExecutor, pagamentoExecutor, setShowInfos, tipo, cliente, data, local, cidade, valor }) {
   const [currentStatus, setCurrentStatus] = useState(pagamentoExecutor);
   const { user, dispatch } = useContext(AuthContext);
 
@@ -67,7 +67,7 @@ export function CardDiligenciaExecutor({ firestoreId, comissaoExecutor, pagament
             <li>{data}</li>
             <li>{local}</li>
             <li>{cidade}</li>
-            <li>{comissaoExecutor}</li>
+            <li>{valor}</li>
           </ul>
         </LeftInfo>
         {/* <Status status={currentStatus} onClick={handleStatusClick}>

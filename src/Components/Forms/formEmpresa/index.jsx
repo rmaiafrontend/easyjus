@@ -93,7 +93,7 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
             <LeftContent>
               <CampoInput label="Nome" placeholder="Ex: Ricardo Petrônio" value={nome} onChange={(e) => setNome(e.target.value)} />
               <CampoInput label="E-mail" placeholder="Ex: ricardo@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <CampoInput label="CPF" placeholder="Ex: 122.587.568-55" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+              <CampoInput label="CNPJ" placeholder="Ex: 23.131.587/0001-18" value={cpf} onChange={(e) => setCpf(e.target.value)} />
               <CampoInput label="OAB" placeholder="Ex:  UF999999" value={oab} onChange={(e) => setOab(e.target.value)} />
             </LeftContent>
             <RightContent>
@@ -116,7 +116,7 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
             </RightContent>
           </Container>
           <Button type="submit" onClick={(e) => submitForm(e)}>
-            Cadastrar Executor
+            Cadastrar Empresa
           </Button>
         </Form>
       </Overlay>

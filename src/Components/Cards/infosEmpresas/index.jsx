@@ -11,7 +11,6 @@ import {
   Filters,
   FilterPeriodo,
   ButtonsPeriodo,
-  ButtonsStatus,
   FilterStatus,
   TitlesList,
   Titles,
@@ -22,20 +21,23 @@ import {
   RightContent,
   CloseButton,
   Campo,
+  TitleFilter,
+  FilterPagamento,
+  ButtonStatusPagamento,
 } from "./style";
 
 import React, { useState, useEffect, useContext } from "react";
-import { collection, onSnapshot, doc } from "firebase/firestore";
+import { collection, onSnapshot, doc, addDoc, deleteDoc, where, query, getDocs } from "firebase/firestore";
 import { db } from "../../../services/firebaseconfig";
 import userIcon from "../../../assets/userIcon.svg";
 import CloseIcon from "../../../assets/close-icon.svg";
 import { NumDiligenciasExecutor } from "../numDiligenciasExecutor";
 import { CardPagamentosExecutor } from "../numPagamentosExecutor";
-import { CardDiligenciaExecutor } from "../cardDiligenciaExecutor";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { format, getMonth } from "date-fns"; // Certifique-se de que está importando 'format' corretamente
+import { format, getMonth, getYear } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { DropdownMesExecutor } from "../../Layout/DropdownMesExecutor";
+import { CardDiligenciaEmpresa } from "../cardDiligenciaEmpresa";
 
 export function InfosEmpresas(props) {
   const { user, dispatch } = useContext(AuthContext);
@@ -45,28 +47,20 @@ export function InfosEmpresas(props) {
 
   //Listas de diligência
   const [listaDiligencias, setListaDiligencias] = useState([]);
-  const [filteredDiligencias, setFilteredDiligencias] = useState([]);
   const [listaResultado, setListaResultado] = useState([]);
 
-  //Estados Filtros
-  const [activeButtonPeriodo, setActiveButtonPeriodo] = useState(null); // Defina "recentes" como ativo por padrão
-  const [activeButtonStatus, setActiveButtonStatus] = useState();
-
   const [diligenciasFetched, setDiligenciasFetched] = useState(false);
-  const [filterOk, setFilterOk] = useState(false);
-
   const [extratoRealizados, setExtratoRealizados] = useState(0.0);
-  const [extratoPendentes, setExtratoPendentes] = useState(0.0);
-
-  const [atualizaInfos, setAtualizaInfos] = useState(false);
 
   const [pagamentosPendentes, setPagamentosPendentes] = useState();
   const [pagamentosRealizados, setPagamentoRealizados] = useState();
-
-  const [showFilters, setShowFilters] = useState(false);
+  const [numDiligencias, setNumDiligencias] = useState();
 
   const [mesSelecionado, setMesSelecionado] = useState();
   const [indexMes, setIndexMes] = useState();
+
+  const [statusPagamento, setStatusPagamento] = useState("Pendente");
+  const [fetchStatus, setFetchStatus] = useState(false);
 
   useEffect(() => {
     const currentMonth = new Date();
@@ -87,41 +81,61 @@ export function InfosEmpresas(props) {
   }, [indexMes]);
 
   useEffect(() => {
-    atualizaPagamentos();
-  }, [listaResultado]);
+    if (listaResultado) {
+      setPagamentosPendentes(0);
+      setPagamentoRealizados(0);
+      atualizaExtrato();
+    }
+  }, [indexMes][listaResultado]);
 
-  function atualizaPagamentos() {
-    let pagamentosRealizados = 0;
-    let pagamentosPendentes = 0;
+  useEffect(() => {
+    if (diligenciasFetched) {
+      atualizaStatus();
+    }
+  }, [indexMes]);
 
-    if (activeButtonPeriodo === null) {
-      listaDiligencias.forEach((item) => {
-        // Certifique-se de que item.valor é tratado como número inteiro
-        let valor = parseFloat(item.valor); // Converte para número inteiro
+  async function atualizaStatus() {
+    const currentYear = new Date();
+    const year = getYear(currentYear);
+    const yearString = year.toString();
+    const indexMesString = indexMes.toString();
 
-        if (item.pagamentoExecutor === true) {
-          pagamentosRealizados += valor;
-        } else if (item.pagamentoExecutor === false) {
-          pagamentosPendentes += valor;
-        }
-      });
-      setPagamentosPendentes(pagamentosPendentes);
-      setPagamentoRealizados(pagamentosRealizados);
+    const financeiroRef = collection(userRef, "financeiro", yearString, indexMesString);
+    const querySnapshot = await getDocs(financeiroRef);
+
+    let contador = 0;
+
+    // Iterar sobre os documentos no snapshot
+    querySnapshot.forEach((doc) => {
+      let nome = doc.data().nomeEmpresa;
+      if (nome === props.selectedEmpresa.nome) {
+        contador++;
+      }
+    });
+
+    if (contador > 0) {
+      setStatusPagamento("Realizado");
     } else {
-      filteredDiligencias.forEach((item) => {
-        // Certifique-se de que item.valor é tratado como número inteiro
-        const valor = parseInt(item.valor, 10); // Converte para número inteiro
-
-        if (item.pagamentoExecutor === true) {
-          pagamentosRealizados += valor;
-        } else if (item.pagamentoExecutor === false) {
-          pagamentosPendentes += valor;
-        }
-      });
+      setStatusPagamento("Pendente");
     }
 
-    setExtratoPendentes(pagamentosPendentes);
-    setExtratoRealizados(pagamentosRealizados);
+    setFetchStatus(true);
+  }
+
+  function atualizaExtrato() {
+    let soma = 0;
+
+    listaResultado.forEach((diligencia) => {
+      soma += diligencia.valor;
+    });
+
+    if (statusPagamento === "Pendente") {
+      setPagamentosPendentes(soma);
+    } else if (statusPagamento === "Realizado") {
+      setPagamentoRealizados(soma);
+    }
+
+    return soma;
   }
 
   function handleClick() {
@@ -180,6 +194,62 @@ export function InfosEmpresas(props) {
     setListaResultado(novoResultado);
   }
 
+  async function handleClickStatus() {
+    let valor = 0;
+    if (statusPagamento === "Realizado") {
+      setStatusPagamento("Pendente");
+      deletePagamentoMes();
+    } else if (statusPagamento === "Pendente") {
+      setStatusPagamento("Realizado");
+      let valor = atualizaExtrato();
+      fetchPagamentoMes(valor);
+    }
+  }
+
+  async function fetchPagamentoMes(valor) {
+    const currentYear = new Date();
+    const year = getYear(currentYear);
+    const yearString = year.toString();
+    const indexMesString = indexMes.toString();
+
+    const userRef = doc(db, "users", user.uid);
+
+    // Corrigindo a construção da referência da coleção
+    const financeiroRef = await collection(userRef, "financeiro", yearString, indexMesString);
+
+    const docDataEmpresa = {
+      tipo: "entrada",
+      indexMes: indexMes,
+      valor: valor,
+      nomeEmpresa: props.selectedEmpresa.nome,
+      idExecutor: props.selectedEmpresa.id,
+    };
+
+    const docEmpresa = await addDoc(financeiroRef, docDataEmpresa);
+  }
+
+  async function deletePagamentoMes() {
+    const currentYear = new Date();
+    const year = getYear(currentYear);
+    const yearString = year.toString();
+    const indexMesString = indexMes.toString();
+
+    const userRef = doc(db, "users", user.uid);
+
+    // Corrigindo a construção da referência da coleção
+    const financeiroRef = collection(userRef, "financeiro", yearString, indexMesString);
+
+    // Create a query against the collection.
+    const q = query(financeiroRef, where("nomeEmpresa", "==", props.selectedEmpresa.nome));
+
+    // Execute the query and get the documents
+    const querySnapshot = await getDocs(q);
+
+    // Iterate over the documents and delete each one
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+  }
   return (
     <>
       <Overlay>
@@ -187,7 +257,6 @@ export function InfosEmpresas(props) {
           <CloseButton onClick={handleClick}>
             <img src={CloseIcon} alt="" />
           </CloseButton>
-          <h1>Área do Cliente</h1>
           <InfosExecutores>
             <ImageExecutor backgroundimage={backgroundUrl || userIcon}></ImageExecutor>
             <DadosExecutor>
@@ -225,14 +294,15 @@ export function InfosEmpresas(props) {
               </ListaDeDados>
             </DadosExecutor>
           </InfosExecutores>
-          <CardsContainer>
-            <NumDiligenciasExecutor numDiligencias={listaDiligencias.length} />
-            <CardPagamentosExecutor title="Pagamentos Pendentes" numero={pagamentosPendentes} color="#FFB547" />
-            <CardPagamentosExecutor title="Pagamentos Realizados" numero={pagamentosRealizados} color="#00E7AF" />
-          </CardsContainer>
           <Line />
+          <h3>Controle Mensal</h3>
+          <CardsContainer>
+            <NumDiligenciasExecutor numDiligencias={listaResultado.length} mes={mesSelecionado} />
+            <CardPagamentosExecutor title="Pagamentos Recebidos" numero={pagamentosRealizados} mes={mesSelecionado} color="#00E7AF" />
+            <CardPagamentosExecutor title="Pagamentos Pendentes" numero={pagamentosPendentes} mes={mesSelecionado} color="#FFB547" />
+          </CardsContainer>
+
           <ContentDiligencias>
-            <h3>Diligências Finalizadas</h3>
             <Filters>
               <FilterPeriodo>
                 <span>Filtrar por mês:</span>
@@ -240,6 +310,14 @@ export function InfosEmpresas(props) {
                   <DropdownMesExecutor setIndexMes={setIndexMes} mesSelecionado={mesSelecionado} setMesSelecionado={setMesSelecionado}></DropdownMesExecutor>
                 </ButtonsPeriodo>
               </FilterPeriodo>
+              <FilterPagamento>
+                <TitleFilter>Status pagamento:</TitleFilter>
+                {fetchStatus ? (
+                  <ButtonStatusPagamento status={statusPagamento} onClick={handleClickStatus}>
+                    {statusPagamento}
+                  </ButtonStatusPagamento>
+                ) : null}
+              </FilterPagamento>
             </Filters>
             <TitlesList>
               <Titles>
@@ -252,22 +330,22 @@ export function InfosEmpresas(props) {
                   <li>Valor</li>
                 </ul>
               </Titles>
-              <Status>
+              {/* <Status>
                 <span>Pagamento</span>
-              </Status>
+              </Status> */}
             </TitlesList>
             <ListDiligenciasExecutor>
               {/* Mostrar diligências filtradas */}
               <ListDiligenciasExecutor>
                 {listaResultado.length > 0 ? (
-                  listaResultado.map((item) => <CardDiligenciaExecutor diligenciasFetched={diligenciasFetched} setDiligenciasFetched={setDiligenciasFetched} key={item.firestoreId} {...item} />)
+                  listaResultado.map((item) => <CardDiligenciaEmpresa diligenciasFetched={diligenciasFetched} setDiligenciasFetched={setDiligenciasFetched} key={item.firestoreId} {...item} />)
                 ) : (
                   <p>Nenhuma diligência encontrada para o período selecionado.</p>
                 )}
               </ListDiligenciasExecutor>
             </ListDiligenciasExecutor>
           </ContentDiligencias>
-          {/* <Bar>
+          <Bar>
             <LeftContent>
               <b>
                 Resumo de pagamentos<span> (Últimos 30 dias)</span>
@@ -277,11 +355,8 @@ export function InfosEmpresas(props) {
               <span className="realizados">
                 Pagamentos Realizados: <b>R${extratoRealizados}</b>
               </span>
-              <span className="pendentes">
-                Pagamentos Pendentes: <b>R${extratoPendentes}</b>
-              </span>
             </RightContent>
-          </Bar> */}
+          </Bar>
         </Box>
       </Overlay>
     </>

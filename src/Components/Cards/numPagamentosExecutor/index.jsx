@@ -9,7 +9,7 @@ export function CardPagamentosExecutor(props) {
           <b>R$</b>
           {props.numero}
         </span>
-        <span className="periodo">Últimos 30 dias</span>
+        <span className="periodo">{props.mes}</span>
       </LeftContent>
     </Card>
   );

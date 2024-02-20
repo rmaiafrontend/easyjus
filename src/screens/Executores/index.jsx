@@ -2,7 +2,6 @@ import { Buttons, Cards } from "./style";
 import CadastraExecutor from "../../Components/Controllers/cadastraExecutor";
 import { FormExecutor } from "../../Components/Forms/formExecutor";
 import { ListExecutores } from "../../Components/Lists/ListExecutores";
-import { InfosExecutor } from "../../Components/Cards/infosExecutor";
 import { useState } from "react";
 
 export function SectionExcutores() {
