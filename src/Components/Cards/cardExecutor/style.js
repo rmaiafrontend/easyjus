@@ -30,7 +30,7 @@ export const Infos = styled.div`
   margin-left: 18px;
   display: flex;
   flex-direction: column;
-  width: 6.5rem;
+  width: 60%;
   .title {
     font-size: 1.2rem;
     font-style: normal;

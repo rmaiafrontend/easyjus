@@ -167,6 +167,17 @@ export function InfosEmpresas(props) {
     }
   }
 
+  // function dataEstaNoMes(dataString) {
+  //   // Divide a string da data para obter dia, mês e ano
+  //   const [dia, mes, ano] = dataString.split("/").map(Number);
+
+  //   // Cria um objeto Date usando ano, mês e dia
+  //   const data = new Date(ano, mes - 1, dia); // Meses em JavaScript são indexados de 0 a 11
+
+  //   // Verifica se o mês da data é igual ao mês desejado
+  //   return data.getMonth() + 1 === indexMes; // Adiciona 1 porque os meses em JavaScript são indexados de 0 a 11
+  // }
+
   function dataEstaNoMes(dataString) {
     // Divide a string da data para obter dia, mês e ano
     const [dia, mes, ano] = dataString.split("/").map(Number);
@@ -174,8 +185,12 @@ export function InfosEmpresas(props) {
     // Cria um objeto Date usando ano, mês e dia
     const data = new Date(ano, mes - 1, dia); // Meses em JavaScript são indexados de 0 a 11
 
-    // Verifica se o mês da data é igual ao mês desejado
-    return data.getMonth() + 1 === indexMes; // Adiciona 1 porque os meses em JavaScript são indexados de 0 a 11
+    // Obtém o mês atual e o ano atual
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+
+    // Verifica se o mês e o ano da data correspondem ao mês e ano atuais
+    return data.getMonth() + 1 === indexMes && data.getFullYear() === anoAtual;
   }
 
   function filtraDiligencias() {
