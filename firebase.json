@@ -1,12 +1,7 @@
 {
   "hosting": {
     "public": "dist",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ],
+    "site": "easyjus-d2408",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
 }

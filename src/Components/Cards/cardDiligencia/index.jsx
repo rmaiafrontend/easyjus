@@ -91,8 +91,8 @@ export function CardDiligencia({
     });
 
     // Atualize o status no elemento correspondente no localStorage
-    const localStorageData = localStorage.getItem("listaDiligencias");
-    const listaDiligenciasLocal = localStorageData ? JSON.parse(localStorageData) : [];
+    const sessionStorageData = sessionStorage.getItem("listaDiligencias");
+    const listaDiligenciasLocal = sessionStorage ? JSON.parse(sessionStorageData) : [];
 
     // Encontre a diligência correspondente no array do localStorage com base no firestoreId
     const diligenciaToUpdate = listaDiligenciasLocal.find((diligencia) => diligencia.firestoreId === firestoreId);
@@ -102,7 +102,7 @@ export function CardDiligencia({
       diligenciaToUpdate.status = novoStatus;
 
       // Atualize o localStorage com a lista de diligências atualizada
-      localStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasLocal));
+      sessionStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasLocal));
     }
     setAtualizaDiligencias(atualizaDiligencias + 1);
 
@@ -140,8 +140,6 @@ export function CardDiligencia({
   }
 
   async function excluiDiligenciaFinalizada() {
-    console.log("chamou excluiDiligenciaFinalizada");
-
     const userRef = doc(db, "users", user.uid);
     const clienteRef = collection(userRef, "empresas", idCliente, "diligenciasFinalizadas");
     const executorRef = collection(userRef, "executores", idResponsavel, "diligenciasFinalizadas");
