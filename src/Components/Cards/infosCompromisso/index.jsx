@@ -9,7 +9,7 @@ export function Compromisso({ diligenciaId, setInfosTrue }) {
   const [fetchOk, setFetchOk] = useState(false);
 
   useEffect(() => {
-    const localStorageData = localStorage.getItem("listaDiligencias");
+    const localStorageData = sessionStorage.getItem("listaDiligencias");
     const diligenciasData = JSON.parse(localStorageData);
     const diligenciaLocal = diligenciasData.find((diligencia) => diligencia.firestoreId === diligenciaId);
     setObjetoDiligencia(diligenciaLocal);

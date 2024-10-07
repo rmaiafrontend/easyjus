@@ -112,7 +112,15 @@ export const Line = styled.div`
   background: linear-gradient(90deg, #7a7a7a 10.57%, rgba(122, 122, 122, 0) 100.76%);
 `;
 
-export const ContentDiligencias = styled.div``;
+export const ContentDiligencias = styled.div`
+  h4 {
+    color: var(--secondary-grey-900, #2b3674);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 42px; /* 168% */
+    letter-spacing: -0.5px;
+  }
+`;
 
 export const Filters = styled.div`
   display: flex;

@@ -17,18 +17,19 @@ export const Top = styled.div`
 `;
 
 export const Agenda = styled.div`
-  overflow-y: hidden;
-  margin-top: 20px;
-  width: 100%;
+  margin-top: 5px;
+  width: fit-content;
   height: 79.8rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  overflow-x: auto;
 `;
 
 export const DiaSemana = styled.div`
   margin-right: 14px;
   width: 40rem;
+  /* max-width: 40rem; */
   height: 65rem;
   .top {
     text-align: center;
@@ -46,4 +47,20 @@ export const DiaSemana = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+export const Navigation = styled.div`
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+export const ButtonControlWeek = styled.button`
+  padding: 8px 40px;
+  margin-right: 15px;
+  border-radius: 8px;
+  background-color: #5232ff;
+  font-size: 12px;
+  color: #ffff;
 `;

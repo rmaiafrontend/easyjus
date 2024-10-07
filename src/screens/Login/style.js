@@ -4,6 +4,15 @@ import imgLogin from "../../assets/image-login.svg";
 export const Content = styled.div`
   display: flex;
   height: 100vh;
+  @media (max-width: 690px) {
+    background-image: url(${imgLogin});
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;
 
 export const LeftContent = styled.div`
@@ -12,6 +21,9 @@ export const LeftContent = styled.div`
   background-image: url(${imgLogin});
   background-size: cover;
   background-position: left;
+  @media (max-width: 690px) {
+    display: none;
+  }
 `;
 export const RightContent = styled.div`
   width: 100%;
@@ -21,4 +33,8 @@ export const RightContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  @media (max-width: 690px) {
+    width: 100%;
+  }
 `;

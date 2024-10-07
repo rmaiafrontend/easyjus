@@ -19,12 +19,18 @@ export const Titles = styled.div`
 export const Cards = styled.div`
   margin-top: 3.2rem;
   width: 100%;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25.7rem, 3fr));
+  gap: 10px;
 `;
 
 export const Hero = styled.div`
   margin-top: 3rem;
   display: flex;
   align-items: center;
+  @media (max-width: 1300px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(32.5rem, 3fr));
+    gap: 10px;
+  }
 `;

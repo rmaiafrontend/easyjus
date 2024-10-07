@@ -29,7 +29,8 @@ export const Overlay = styled.div`
 export const Form = styled.div`
   position: relative;
   padding: 28px 24px;
-  width: 372px;
+  width: 90%;
+  max-width: 372px;
   height: 332px;
   width: 372px;
   height: auto;

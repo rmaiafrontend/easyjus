@@ -30,8 +30,13 @@ export function FormTipoDiligencia({ setShowCadastraTipos }) {
       // Atualize o estado local
       setTiposCadastrados([...tiposCadastrados, { id: docRef.id, tipo: inputTipo }]);
 
-      // Atualize o Local Storage
-      localStorage.setItem("tiposDiligencia", JSON.stringify([...tiposCadastrados, { id: docRef.id, tipo: inputTipo }]));
+      // Verifique se já existe uma lista de tipos de diligência no sessionStorage
+      const sessionStorageData = sessionStorage.getItem("tiposDiligencia");
+      const tiposDiligenciaSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
+
+      // Adicione o novo tipo de diligência à lista no sessionStorage
+      tiposDiligenciaSession.push({ id: docRef.id, tipo: inputTipo });
+      sessionStorage.setItem("tiposDiligencia", JSON.stringify(tiposDiligenciaSession));
 
       // Limpe o input após o cadastro
       setInputTipo("");
@@ -47,27 +52,31 @@ export function FormTipoDiligencia({ setShowCadastraTipos }) {
       // Atualize o estado local excluindo o tipo de diligência com o ID correspondente
       setTiposCadastrados(tiposCadastrados.filter((tipo) => tipo.id !== id));
 
-      // Atualize o Local Storage excluindo o tipo de diligência com o ID correspondente
-      localStorage.setItem("tiposDiligencia", JSON.stringify(tiposCadastrados.filter((tipo) => tipo.id !== id)));
+      // Verifique se já existe uma lista de tipos de diligência no sessionStorage
+      const sessionStorageData = sessionStorage.getItem("tiposDiligencia");
+      if (sessionStorageData) {
+        // Atualize o sessionStorage excluindo o tipo de diligência com o ID correspondente
+        const tiposDiligenciaSession = JSON.parse(sessionStorageData).filter((tipo) => tipo.id !== id);
+        sessionStorage.setItem("tiposDiligencia", JSON.stringify(tiposDiligenciaSession));
+      }
     } catch (error) {
       console.error("Erro ao excluir tipoDiligencia:", error);
     }
   }
 
   function getDiligenciasFirebase() {
-    const localStorageData = localStorage.getItem("tiposDiligencia");
-    if (localStorageData) {
-      const tipoDiligencias = JSON.parse(localStorageData);
+    const sessionStorageData = sessionStorage.getItem("tiposDiligencia");
+    if (sessionStorageData) {
+      const tipoDiligencias = JSON.parse(sessionStorageData);
       setTiposCadastrados(tipoDiligencias);
     } else {
       const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-        // Usando a nova referência diligenciasRef
         const tiposDiligenciaData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setTiposCadastrados(tiposDiligenciaData);
-        localStorage.setItem("tiposDiligencia", JSON.stringify(tiposDiligenciaData));
+        sessionStorage.setItem("tiposDiligencia", JSON.stringify(tiposDiligenciaData));
       });
     }
   }

@@ -4,6 +4,15 @@ export const Content = styled.div`
   width: 100%;
   max-width: 40.1rem;
   padding: 25px 42px 25px 42px;
+  span {
+    color: red;
+    font-size: 12px;
+  }
+  @media (max-width: 690px) {
+    background-color: #ffff;
+    border-radius: 15px;
+    padding: 25px;
+  }
 `;
 
 export const Form = styled.div`
@@ -25,11 +34,17 @@ export const TopContent = styled.div`
     max-width: 16.4rem;
     line-height: 27.695px; /* 100% */
   }
+
+  @media (max-width: 480px) {
+    h3 {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
 `;
 
 export const Input = styled.input`
   width: 100%;
-  max-width: 31.5rem;
   height: 4.5rem;
   border: 0.06rem solid #cdcdcd;
   border-radius: 0.7rem;
@@ -87,6 +102,9 @@ export const ButtonCadastrar = styled.button`
   color: #fff;
   font-size: 13px;
   font-weight: 300;
+  @media (max-width: 380px) {
+    font-size: 11px;
+  }
 `;
 
 export const ButtonReset = styled.button`
@@ -97,4 +115,7 @@ export const ButtonReset = styled.button`
   color: #fff;
   font-size: 13px;
   font-weight: 300;
+  @media (max-width: 380px) {
+    font-size: 11px;
+  }
 `;

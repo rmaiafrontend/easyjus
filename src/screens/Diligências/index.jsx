@@ -6,6 +6,12 @@ import { ListDiligencias } from "../../Components/Lists/ListDiligencias";
 import { FormDiligencia } from "../../Components/Forms/formDiligencia";
 import { FormTipoDiligencia } from "../../Components/Forms/formTipoDiligencia";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+
 export function SectionDiligencias() {
   const [showElement, setShowElement] = useState(false);
   const [showCadastraTipos, setShowCadastraTipos] = useState(false);
@@ -16,6 +22,7 @@ export function SectionDiligencias() {
     <>
       <Buttons>
         <CadastraDiligencia setShowElement={setShowElement} />
+
         <CadastraTipoDiligencia setShowCadastraTipos={setShowCadastraTipos} />
       </Buttons>
 
@@ -38,13 +45,13 @@ export function SectionDiligencias() {
         <TitlesList>
           <Titles>
             <ul>
-              <li>Tipo</li>
-              <li>Cliente</li>
-              <li>Responsável</li>
-              <li>Data</li>
-              <li>Orgão</li>
-              <li>Local</li>
-              <li>Preço</li>
+              <li className="tipo">Tipo</li>
+              <li className="cliente">Cliente</li>
+              <li className="responsavel"> Responsável</li>
+              <li className="data">Data</li>
+              <li className="orgao">Orgão</li>
+              <li className="local">Local</li>
+              <li className="valor">Valor</li>
             </ul>
           </Titles>
           <Status>

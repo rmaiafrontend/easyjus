@@ -33,6 +33,8 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
   const userRef = doc(db, "users", userId); // Crie uma referência ao documento do usuário
   const diligenciasRef = collection(userRef, "diligencias"); // Crie uma referência à subcoleção "diligencias"
 
+  const [dataFormatada, setDataFomatada] = useState();
+
   useEffect(() => {
     const fetchData = async (queryPath, stateSetter) => {
       try {
@@ -84,6 +86,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
   }
 
   function converterFormatoData(dataStr) {
+    console.log(dataStr);
     const partes = dataStr.split("-");
     let ano = "ano";
     let mes = "mes";
@@ -100,8 +103,8 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
         dia = partes[2];
       }
     }
-    const dataFormarada = `${dia}/${mes}/${ano}`;
-    return dataFormarada;
+    const dataFormatada = `${dia}/${mes}/${ano}`;
+    setDataFomatada(dataFormatada);
   }
 
   function handleDateChange(event) {
@@ -162,7 +165,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
       setListaDiligencias(updatedDiligencias);
 
       // Atualize o localStorage com a lista atualizada de diligências
-      localStorage.setItem("listaDiligencias", JSON.stringify(updatedDiligencias));
+      sessionStorage.setItem("listaDiligencias", JSON.stringify(updatedDiligencias));
 
       // Feche o formulário de edição
       setIsEditing(false);
@@ -214,7 +217,7 @@ export function EditDiligencia({ diligencia, setIsEditing, setListaDiligencias, 
                 <Title>
                   <span>Data</span>
                 </Title>
-                <Input label="Data" type="date" id="dateField" value={data} onChange={handleDateChange} />
+                <Input label="Data" type="date" id="dateField" value={dataFormatada} onChange={handleDateChange} />
               </Campo>
               <Campo>
                 <Title>

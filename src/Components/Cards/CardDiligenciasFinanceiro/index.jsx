@@ -7,7 +7,7 @@ export function CardDiligenciasFinanceiro(props) {
       <LeftContent>
         <span className="title">Diligências</span>
         <span className="numero">{props.numDiligencias}</span>
-        <span className="periodo">Últimos 30 dias</span>
+        <span className="periodo">{props.mes}</span>
       </LeftContent>
       <RightContent>
         <img src={GraficoDiliencias} alt="" />

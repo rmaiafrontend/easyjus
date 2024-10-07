@@ -3,7 +3,6 @@ import imgHero from "./../../../assets/img-hero.png";
 
 export const Card = styled.div`
   z-index: 1;
-  width: 100%;
   max-width: 72rem;
   height: 34.5rem;
   background-color: #fff;
@@ -15,6 +14,10 @@ export const Card = styled.div`
   box-shadow: 0px 4px 97px 0px rgba(0, 0, 0, 0.25);
   &:hover {
     transform: scale(1.03);
+  }
+  @media (max-width: 1300px) {
+    max-width: 100%;
+    box-shadow: none;
   }
 `;
 
@@ -48,6 +51,9 @@ export const LeftContent = styled.div`
     font-weight: 500;
     color: #fff;
   }
+  @media (max-width: 1300px) {
+    padding: 35px;
+  }
 `;
 
 export const RightContent = styled.div`
@@ -56,4 +62,7 @@ export const RightContent = styled.div`
   width: 29.1rem;
   height: 28.6rem;
   background-image: url(${imgHero});
+  @media (max-width: 1300px) {
+    display: none;
+  }
 `;

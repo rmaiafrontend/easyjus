@@ -265,6 +265,24 @@ export function InfosEmpresas(props) {
       await deleteDoc(doc.ref);
     });
   }
+
+  function exportToCSV() {
+    let csvContent = "data:text/csv;charset=utf-8," + "\ufeffNúmero Processo;Tipo;Data;Orgão;Local;Parte Contrária;Parte interessada;Valor\n"; // Cabeçalho CSV com BOM UTF-8
+
+    listaResultado.forEach((diligencia) => {
+      const row = `"${diligencia.numeroProcesso}";"${diligencia.tipo}";"${diligencia.data}";"${diligencia.local}";"${diligencia.cidade}";"${diligencia.parteContraria}";"${diligencia.parteInteressada}";"${diligencia.valor}"\n`;
+      csvContent += row;
+    });
+
+    const encodedURI = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedURI);
+    link.setAttribute("download", "diligencias.csv");
+    document.body.appendChild(link);
+
+    link.click();
+  }
+
   return (
     <>
       <Overlay>
@@ -318,6 +336,7 @@ export function InfosEmpresas(props) {
           </CardsContainer>
 
           <ContentDiligencias>
+            <h4>Diligências finalizadas</h4>
             <Filters>
               <FilterPeriodo>
                 <span>Filtrar por mês:</span>
@@ -359,8 +378,9 @@ export function InfosEmpresas(props) {
                 )}
               </ListDiligenciasExecutor>
             </ListDiligenciasExecutor>
+            <button onClick={exportToCSV}>Exportar para CSV</button>
           </ContentDiligencias>
-          <Bar>
+          {/* <Bar>
             <LeftContent>
               <b>
                 Resumo de pagamentos<span> (Últimos 30 dias)</span>
@@ -371,7 +391,7 @@ export function InfosEmpresas(props) {
                 Pagamentos Realizados: <b>R${extratoRealizados}</b>
               </span>
             </RightContent>
-          </Bar>
+          </Bar> */}
         </Box>
       </Overlay>
     </>

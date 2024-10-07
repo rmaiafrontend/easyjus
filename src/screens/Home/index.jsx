@@ -47,7 +47,7 @@ export function SectionDashboard() {
   }, [fetchExecutores]);
 
   function getDiligenciasFirebase() {
-    const localStorageData = localStorage.getItem("listaDiligencias");
+    const localStorageData = sessionStorage.getItem("listaDiligencias");
     if (localStorageData) {
       const diligenciasData = JSON.parse(localStorageData);
       setListaDiligencias(diligenciasData);
@@ -60,14 +60,14 @@ export function SectionDashboard() {
           ...doc.data(),
         }));
         setListaDiligencias(diligenciasData);
-        localStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
+        sessionStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
         setFetchDiligencias(true);
       });
     }
   }
 
   function getEmpresas() {
-    const localStorageData = localStorage.getItem("listaEmpresas");
+    const localStorageData = sessionStorage.getItem("listaEmpresas");
     if (localStorageData) {
       const empresasData = JSON.parse(localStorageData);
       setListaEmpresas(empresasData);
@@ -80,14 +80,14 @@ export function SectionDashboard() {
           ...doc.data(),
         }));
         setListaEmpresas(empresasData);
-        localStorage.setItem("listaEmpresas", JSON.stringify(empresasData));
+        sessionStorage.setItem("listaEmpresas", JSON.stringify(empresasData));
         setFetchEmpresas(true);
       });
     }
   }
 
   function getExecutores() {
-    const localStorageData = localStorage.getItem("listaExecutores");
+    const localStorageData = sessionStorage.getItem("listaExecutores");
     if (localStorageData) {
       const executoresData = JSON.parse(localStorageData);
       setListaExecutores(executoresData);
@@ -99,7 +99,7 @@ export function SectionDashboard() {
           ...doc.data(),
         }));
         setListaExecutores(executoresData);
-        localStorage.setItem("listaExecutores", JSON.stringify(executoresData));
+        sessionStorage.setItem("listaExecutores", JSON.stringify(executoresData));
       });
     }
   }

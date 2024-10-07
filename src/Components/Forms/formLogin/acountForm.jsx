@@ -18,8 +18,9 @@ export function AccountForm() {
   const navigate = useNavigate();
   const auth = getAuth(app);
 
-  function handleLogin() {
-    login(email, password);
+  async function handleLogin() {
+    await login(email, password);
+    console.log(isPending);
   }
 
   return (
@@ -36,6 +37,7 @@ export function AccountForm() {
           <Label htmlFor="password">Senha</Label>
           <Input type="password" id="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </Form>
+        {error ? <span>{error}</span> : null}
         <Buttons>
           <ButtonEntrar title="Entrar" onClick={handleLogin}>
             Entrar

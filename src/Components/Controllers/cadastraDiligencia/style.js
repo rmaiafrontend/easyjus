@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Card = styled.button`
   width: 100%;
-  max-width: 25.7rem;
   height: 9.7rem;
   border-radius: 20px;
   background: linear-gradient(146deg, #7e7fff 0%, #4b26ff 100%);

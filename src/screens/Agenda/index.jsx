@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { Top, Agenda, DiaSemana } from "./style";
+import { Top, Agenda, DiaSemana, Navigation, ButtonControlWeek } from "./style";
 import { CardAgenda } from "./../../Components/Cards/cardAgenda";
 import { Compromisso } from "../../Components/Cards/infosCompromisso";
+import { GoogleCalendarComponent } from "../../Components/GoogleCalendar";
 
-import { startOfWeek, addDays, format, isSameDay } from "date-fns";
+import { startOfWeek, addDays, format, isSameDay, subDays } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
 export function SectionAgenda() {
@@ -13,32 +14,32 @@ export function SectionAgenda() {
   const [listaDiligencias, setListaDiligencias] = useState();
   const [fetchOk, setFetchOk] = useState(false);
 
+  const [currentWeek, setCurrentWeek] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
+
   useEffect(() => {
-    const localStorageData = localStorage.getItem("listaDiligencias");
+    const localStorageData = sessionStorage.getItem("listaDiligencias");
     const diligenciasData = JSON.parse(localStorageData);
     setListaDiligencias(diligenciasData);
     setFetchOk(true);
   }, []);
 
-  useEffect(() => {
-    if (fetchOk) {
-      console.log(listaDiligencias);
-    }
-  }, [fetchOk]);
-
   // Obtém a data atual
   const currentDate = new Date();
 
-  // Obtém o início da semana atual, garantindo que seja sempre segunda-feira
-  const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 1 }); // O parâmetro 1 indica segunda-feira
+  const goToNextWeek = () => {
+    const nextWeek = addDays(currentWeek, 7);
+    setCurrentWeek(nextWeek);
+  };
 
-  // Array para armazenar os dias úteis da semana atual
+  const goToPreviousWeek = () => {
+    const previousWeek = subDays(currentWeek, 7);
+    setCurrentWeek(previousWeek);
+  };
+
   const workDays = [];
 
-  // Loop para iterar sobre os dias úteis da semana
   for (let index = 0; index < 5; index++) {
-    // Adiciona o dia útil à lista de dias de trabalho
-    const day = addDays(startOfCurrentWeek, index);
+    const day = addDays(currentWeek, index);
     workDays.push(day);
   }
 
@@ -58,6 +59,10 @@ export function SectionAgenda() {
       <Top>
         <h1>Agenda Semanal</h1>;<span>Clique nos cards para ver as informações detalhadas de cada compromisso.</span>
       </Top>
+      <Navigation>
+        <ButtonControlWeek onClick={goToPreviousWeek}>Semana Anterior</ButtonControlWeek>
+        <ButtonControlWeek onClick={goToNextWeek}>Próxima Semana</ButtonControlWeek>
+      </Navigation>
       <Agenda>
         {workDays.map((day, index) => (
           <DiaSemana key={index}>

@@ -18,7 +18,7 @@ export function SectionFinanceiro() {
   const executorRef = collection(userRef, "executores");
 
   const [mesSelecionado, setMesSelecionado] = useState();
-  const [indexMes, setIndexMes] = useState(2);
+  const [indexMes, setIndexMes] = useState();
 
   const [listaFiltradaEmpresas, setListaFiltradaEmpresas] = useState([]);
   const [listaFiltradaExecutores, setListaFiltradaExecutores] = useState([]);
@@ -27,6 +27,9 @@ export function SectionFinanceiro() {
 
   const [filtroEmpresa, setFiltroEmpresa] = useState(false);
   const [filtroExecutor, setFiltroExecutor] = useState(false);
+
+  const [entradas, setEntradas] = useState();
+  const [saidas, setSaidas] = useState();
 
   const [saldo, setSaldo] = useState(0);
 
@@ -130,9 +133,13 @@ export function SectionFinanceiro() {
       somaEntradas += cliente.valor;
     });
 
+    setEntradas(somaEntradas);
+
     listaFiltradaExecutores.forEach((executor) => {
       somaSaidas += executor.valor;
     });
+
+    setSaidas(somaSaidas);
 
     let saldo = somaEntradas - somaSaidas;
     setSaldo(saldo);
@@ -374,6 +381,15 @@ export function SectionFinanceiro() {
 
   return (
     <>
+      <TopContent>
+        <Title>
+          <h1>Financeiro</h1>
+        </Title>
+        <BoxCard>
+          <CardPagamentosFinanceiro mes={mesSelecionado} title="Entradas" numero={entradas} color="#00E7AF" />
+          <CardPagamentosFinanceiro mes={mesSelecionado} title="Saidas" numero={saidas} color="#FFB547" />
+        </BoxCard>
+      </TopContent>
       <MainContent>
         <h2>Controle Mensal</h2>
         <FilterContainer>
@@ -417,16 +433,6 @@ export function SectionFinanceiro() {
             </>
           ) : null}
         </BoxSaldo>
-        {/* <TopContent>
-          <Title>
-            <h1>Financeiro</h1>
-          </Title>
-          <BoxCard>
-            <CardDiligenciasFinanceiro numDiligencias="24" />
-            <CardPagamentosFinanceiro title="Entradas" numero={20} color="#00E7AF" />
-            <CardPagamentosFinanceiro title="Saidas" numero={30} color="#FFB547" />
-          </BoxCard>
-        </TopContent> */}
       </MainContent>
     </>
   );

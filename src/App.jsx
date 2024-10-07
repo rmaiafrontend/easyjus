@@ -15,6 +15,7 @@ import { SectionEmpresas } from "./screens/Empresas";
 import { SectionFinanceiro } from "./screens/Financeiro";
 import { SectionAgenda } from "./screens/Agenda";
 import { SectionResetPassword } from "./screens/ResetPassword";
+import { Menu } from "./Components/Layout/Menu";
 
 import { useAuthContext } from "./hooks/useAuthContext";
 
@@ -28,6 +29,7 @@ function App() {
           {user ? (
             <>
               <div className="container">
+                <Menu />
                 <div className="left-content">
                   <div className="containerBar">
                     <SideBar />

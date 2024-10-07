@@ -10,7 +10,9 @@ export const MainContent = styled.div``;
 export const Buttons = styled.div`
   margin-top: 3.2rem;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(23rem, 2fr));
+  gap: 10px;
   align-items: center;
   margin-bottom: 4rem;
 `;
@@ -47,10 +49,42 @@ export const Titles = styled.div`
       font-weight: 500;
     }
   }
+  @media (max-width: 1170px) {
+    ul {
+      .cliente {
+        display: none;
+      }
+      .responsavel {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 670px) {
+    ul {
+      .valor {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 580px) {
+    ul {
+      .orgao {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 420px) {
+    ul {
+      .local {
+        display: none;
+      }
+    }
+  }
 `;
 
 export const Status = styled.div`
-  margin-right: 6.5rem;
+  width: 120px;
+  text-align: center;
   span {
     font-size: 12px;
     font-weight: 400;
@@ -59,6 +93,12 @@ export const Status = styled.div`
 
 export const Filters = styled.div`
   margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 2fr));
+  gap: 10px;
+  @media (max-width: 570px) {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 2fr));
+  }
 `;
 
 export const Filter = styled.button`
@@ -75,7 +115,7 @@ export const Filter = styled.button`
   ${(props) =>
     props.active &&
     `
-    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
   
   `}
 `;

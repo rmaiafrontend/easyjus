@@ -168,9 +168,9 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
         docs: [],
       };
 
-      // Verifique se já existe uma diligência com o mesmo localId no localStorage
-      const localStorageData = localStorage.getItem("listaDiligencias");
-      const listaDiligenciasLocal = localStorageData ? JSON.parse(localStorageData) : [];
+      // Verifique se já existe uma diligência com o mesmo localId no sessionStorage
+      const sessionStorageData = sessionStorage.getItem("listaDiligencias");
+      const listaDiligenciasSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
 
       // Adicione o documento ao Firestore e obtenha o ID gerado
       const docRef = await addDoc(diligenciasRef, docData);
@@ -181,9 +181,9 @@ export function FormDiligencia({ setShowElement, setFirebaseDataLoaded, firebase
       // Salve o objeto docData no Firestore novamente para incluir o firestoreId
       await setDoc(doc(diligenciasRef, docRef.id), docData);
 
-      // Salve o novo registro no localStorage
-      listaDiligenciasLocal.unshift(docData);
-      localStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasLocal));
+      // Salve o novo registro no sessionStorage
+      listaDiligenciasSession.unshift(docData);
+      sessionStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasSession));
 
       alert("Diligência cadastrada com sucesso!");
       setShowElement(false);

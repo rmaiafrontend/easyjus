@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const Card = styled.button`
-  margin-left: 20px;
   width: 100%;
-  max-width: 25.7rem;
   height: 9.7rem;
   border-radius: 20px;
   background: #ffff;

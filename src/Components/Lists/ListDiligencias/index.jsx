@@ -17,8 +17,8 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
   const [atualizaDiligencias, setAtualizaDiligencias] = useState(0);
   const [filteredDiligencias, setFilteredDiligencias] = useState([]);
 
-  const userRef = doc(db, "users", user.uid); // Crie uma referência ao documento do usuário
-  const diligenciasRef = collection(userRef, "diligencias"); // Crie uma referência à subcoleção "diligencias"
+  const userRef = doc(db, "users", user.uid);
+  const diligenciasRef = collection(userRef, "diligencias");
 
   useEffect(() => {
     getDiligenciasFirebase();
@@ -35,32 +35,31 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
       } else if (filter === "Finalizado") {
         return diligencia.status === "Finalizado";
       }
-      return true; // Filtro desconhecido, mostrar todas as diligências
+      return true;
     });
 
     setFilteredDiligencias(filtered);
   }, [listaDiligencias, filter]);
 
-  async function removeDiligenciaFromLocalStorage(diligencia) {
-    const localStorageData = localStorage.getItem("listaDiligencias");
-    const listaDiligenciasLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    const novasDiligenciasLocal = listaDiligenciasLocal.filter((d) => d.firestoreId !== diligencia.firestoreId);
-    localStorage.setItem("listaDiligencias", JSON.stringify(novasDiligenciasLocal));
+  async function removeDiligenciaFromSessionStorage(diligencia) {
+    const sessionStorageData = sessionStorage.getItem("listaDiligencias");
+    const listaDiligenciasSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
+    const novasDiligenciasSession = listaDiligenciasSession.filter((d) => d.firestoreId !== diligencia.firestoreId);
+    sessionStorage.setItem("listaDiligencias", JSON.stringify(novasDiligenciasSession));
   }
 
   async function removeDiligenciaFromFirestore(diligencia) {
     try {
-      await deleteDoc(doc(diligenciasRef, diligencia.firestoreId)); // Usando a nova referência diligenciasRef
+      await deleteDoc(doc(diligenciasRef, diligencia.firestoreId));
       return true;
     } catch (error) {
-      console.error("Error deleting diligencia from Firestore:", error);
+      console.error("Erro ao deletar diligência do Firestore:", error);
       return false;
     }
   }
 
   async function removeDiligenciaFromStorage(diligenciaId) {
     try {
-      // Realize a busca da diligência no estado listaDiligencias usando o ID
       const diligencia = listaDiligencias.find((d) => d.firestoreId === diligenciaId);
 
       if (!diligencia) {
@@ -75,7 +74,7 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
       }
       return true;
     } catch (error) {
-      console.error("Error deleting diligencia from Storage:", error);
+      console.error("Erro ao deletar diligência do Storage:", error);
       return false;
     }
   }
@@ -83,10 +82,9 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
   async function handleDeleteDiligencia() {
     const removedFromFirestore = await removeDiligenciaFromFirestore(selectedDiligencia);
     if (removedFromFirestore) {
-      console.log(selectedDiligencia);
       const removedFromStorage = await removeDiligenciaFromStorage(selectedDiligencia.firestoreId);
       if (removedFromStorage) {
-        removeDiligenciaFromLocalStorage(selectedDiligencia);
+        removeDiligenciaFromSessionStorage(selectedDiligencia);
         alert("Diligência excluída com sucesso!");
         setListaDiligencias((prevDiligencias) => prevDiligencias.filter((d) => d.firestoreId !== selectedDiligencia.firestoreId));
         setShowInfos(false);
@@ -99,19 +97,18 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
   }
 
   function getDiligenciasFirebase() {
-    const localStorageData = localStorage.getItem("listaDiligencias");
-    if (localStorageData) {
-      const diligenciasData = JSON.parse(localStorageData);
+    const sessionStorageData = sessionStorage.getItem("listaDiligencias");
+    if (sessionStorageData) {
+      const diligenciasData = JSON.parse(sessionStorageData);
       setListaDiligencias(diligenciasData);
     } else {
       const unsubscribe = onSnapshot(diligenciasRef, (snapshot) => {
-        // Usando a nova referência diligenciasRef
         const diligenciasData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setListaDiligencias(diligenciasData);
-        localStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
+        sessionStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
       });
     }
   }

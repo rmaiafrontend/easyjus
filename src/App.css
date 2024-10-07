@@ -1,5 +1,8 @@
 .container {
   display: flex;
+  @media (max-width: 1170px) {
+    display: block;
+  }
 }
 
 .containerBar {
@@ -7,10 +10,15 @@
 }
 
 .left-content {
-  width: 500x;
+  @media (max-width: 1170px) {
+    display: none;
+  }
 }
 
 .right-content {
   width: 100%;
   padding: 0px 30px 0 30px;
+  @media (max-width: 490px) {
+    padding: 0px 10px 0 10px;
+  }
 }

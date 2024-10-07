@@ -253,6 +253,23 @@ export function InfosExecutorNew(props) {
     });
   }
 
+  function exportToCSV() {
+    let csvContent = "data:text/csv;charset=utf-8," + "\ufeffNúmero Processo;Tipo;Empresa;Data;Orgão;Local;Parte Contrária;Parte interessada;Comissão\n"; // Cabeçalho CSV com BOM UTF-8
+
+    listaResultado.forEach((diligencia) => {
+      const row = `"${diligencia.numeroProcesso}";"${diligencia.tipo}";"${diligencia.cliente}";"${diligencia.data}";"${diligencia.local}";"${diligencia.cidade}";"${diligencia.parteContraria}";"${diligencia.parteInteressada}";"${diligencia.comissaoExecutor}"\n`;
+      csvContent += row;
+    });
+
+    const encodedURI = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedURI);
+    link.setAttribute("download", "diligencias.csv");
+    document.body.appendChild(link);
+
+    link.click();
+  }
+
   return (
     <>
       <Overlay>
@@ -305,6 +322,7 @@ export function InfosExecutorNew(props) {
             <CardPagamentosExecutor title="Pagamentos Pendentes" numero={pagamentosPendentes} mes={mesSelecionado} color="#FFB547" />
           </CardsContainer>
           <ContentDiligencias>
+            <h4>Diligências finalizadas</h4>
             <Filters>
               <FilterPeriodo>
                 <TitleFilter>Filtrar por mês:</TitleFilter>
@@ -322,6 +340,7 @@ export function InfosExecutorNew(props) {
                 ) : null}
               </FilterPagamento>
             </Filters>
+
             <TitlesList>
               <Titles>
                 <ul>
@@ -347,6 +366,7 @@ export function InfosExecutorNew(props) {
                 )}
               </ListDiligenciasExecutor>
             </ListDiligenciasExecutor>
+            <button onClick={exportToCSV}>Exportar diligências</button>
           </ContentDiligencias>
           {/* <Bar>
             <LeftContent>

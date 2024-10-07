@@ -11,6 +11,7 @@ const fadeIn = keyframes`
 `;
 
 export const Overlay = styled.div`
+  padding-top: 50px;
   position: fixed;
   top: 0;
   left: 0;
@@ -28,7 +29,8 @@ export const Overlay = styled.div`
 export const Form = styled.form`
   position: fixed;
   padding: 22px 22px;
-  width: 100%;
+  margin: 20px;
+  width: 90%;
   max-width: 74.3rem;
   height: 44rem;
   background-color: #fff;
@@ -41,20 +43,33 @@ export const Form = styled.form`
     font-size: 24px;
     font-weight: 500;
   }
+
+  @media (max-width: 830px) {
+    height: auto;
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 2.2rem;
+  @media (max-width: 830px) {
+    flex-direction: column;
+  }
 `;
 
 export const LeftContent = styled.div`
   width: 49%;
+  @media (max-width: 830px) {
+    width: 100%;
+  }
 `;
 
 export const RightContent = styled.div`
   width: 49%;
+  @media (max-width: 830px) {
+    width: 100%;
+  }
 `;
 
 export const CloseButton = styled.button`

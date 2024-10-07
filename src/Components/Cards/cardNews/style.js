@@ -36,4 +36,8 @@ export const Card = styled.div`
   &:hover {
     transform: scale(1.03);
   }
+  @media (max-width: 1300px) {
+    max-width: 100%;
+    margin-left: 0;
+  }
 `;

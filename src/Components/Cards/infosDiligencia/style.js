@@ -12,6 +12,7 @@ const fadeIn = keyframes`
 `;
 
 export const Overlay = styled.div`
+  padding-top: 50px;
   position: fixed;
   top: 0;
   left: 0;
@@ -29,7 +30,7 @@ export const Overlay = styled.div`
 export const Form = styled.div`
   position: relative;
   padding: 22px 22px;
-  width: 100%;
+  width: 90%;
   max-width: 57.9rem;
   background-color: #fff;
   border-radius: 1.5rem;
@@ -60,9 +61,18 @@ export const TopContent = styled.div`
   justify-content: space-between;
   .left {
     width: 49%;
+    @media (max-width: 650px) {
+      width: 100%;
+    }
   }
   .right {
     width: 49%;
+    @media (max-width: 650px) {
+      width: 100%;
+    }
+  }
+  @media (max-width: 650px) {
+    flex-direction: column;
   }
 `;
 

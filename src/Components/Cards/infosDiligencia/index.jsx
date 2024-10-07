@@ -15,6 +15,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
   const { user, dispatch } = useContext(AuthContext);
 
   const userRef = doc(db, "users", user.uid); // Crie uma referência ao documento do usuário
+  console.log(diligencia);
 
   useEffect(() => {
     // Função para buscar as informações do localStorage e preencher o estado fileList
@@ -29,7 +30,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
       } else {
         // Se não houver informações no localStorage, busque do Firebase
         const firestore = getFirestore();
-        const documentoRef = doc(firestore, userRef, "diligencias", diligencia.firestoreId);
+        const documentoRef = doc(firestore, "users", user.uid, "diligencias", diligencia.firestoreId);
 
         getDoc(documentoRef)
           .then((docSnap) => {
@@ -139,6 +140,11 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
     }
   };
 
+  function HandleCopy() {
+    const texto = `${diligencia.tipo}  - ${diligencia.data} - ${diligencia.hora} - ${diligencia.local} - ${diligencia.cidade} - ${diligencia.numeroProcesso} - ${diligencia.parteInteressada} x ${diligencia.parteContraria}`;
+    navigator.clipboard.writeText(texto);
+  }
+
   function handleDownload(link) {
     // Crie um elemento 'a' temporário
     const tempLink = document.createElement("a");
@@ -209,6 +215,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
               )}
             </BottonContent>
           </Container>
+          <Button onClick={HandleCopy}>Copiar Informações</Button>
           <Button onClick={showEdition}>Editar diligência</Button>
           <ButtonDelete onClick={handleDeleteDiligencia}>Excluir diligência</ButtonDelete>
         </Form>

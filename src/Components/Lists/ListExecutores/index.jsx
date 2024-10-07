@@ -8,8 +8,8 @@ import { InfosExecutorNew } from "../../Cards/infosExecutor copy";
 
 export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   const { user, dispatch } = useContext(AuthContext);
-  const userRef = doc(db, "users", user.uid); // Crie uma referência ao documento do usuário
-  const executoresRef = collection(userRef, "executores"); // Crie uma referência à subcoleção "diligencias"
+  const userRef = doc(db, "users", user.uid);
+  const executoresRef = collection(userRef, "executores");
 
   const [listaExecutores, setListaExecutores] = useState([]);
   const [showInfosExecutor, setShowInfosExecutor] = useState(false);
@@ -20,46 +20,47 @@ export function ListExecutores({ setatualizaExecutores, atualizaExecutores }) {
   }, [atualizaExecutores]);
 
   function getExecutores() {
-    const localStorageData = localStorage.getItem("listaExecutores");
-    if (localStorageData) {
-      const executoresData = JSON.parse(localStorageData);
+    const sessionStorageData = sessionStorage.getItem("listaExecutores");
+    if (sessionStorageData) {
+      const executoresData = JSON.parse(sessionStorageData);
       setListaExecutores(executoresData);
     } else {
       const unsubscribe = onSnapshot(executoresRef, (snapshot) => {
-        // Usando a nova referência diligenciasRef
         const executoresData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setListaExecutores(executoresData);
-        localStorage.setItem("listaExecutores", JSON.stringify(executoresData));
+        sessionStorage.setItem("listaExecutores", JSON.stringify(executoresData));
       });
     }
   }
 
   async function handleDeleteExecutor(id) {
-    console.log("chamou a função!", id);
-    const removedFromFirestore = await removeExecutorFromFirestore(id);
-    if (removedFromFirestore) {
-      const removedFromStorage = await removeExecutorFromLocalStorage(id);
+    const result = confirm("Deseja realmente deletar o executor?");
+    if (result) {
+      const removedFromFirestore = await removeExecutorFromFirestore(id);
+      if (removedFromFirestore) {
+        const removedFromStorage = await removeExecutorFromSessionStorage(id);
+      }
     }
   }
 
-  async function removeExecutorFromLocalStorage(id) {
-    const localStorageData = localStorage.getItem("listaExecutores");
-    const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    const novosExecutoresLocal = listaExecutoresLocal.filter((d) => d.id !== id);
-    localStorage.setItem("listaExecutores", JSON.stringify(novosExecutoresLocal));
-    setListaExecutores(novosExecutoresLocal);
+  async function removeExecutorFromSessionStorage(id) {
+    const sessionStorageData = sessionStorage.getItem("listaExecutores");
+    const listaExecutoresSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
+    const novosExecutoresSession = listaExecutoresSession.filter((d) => d.id !== id);
+    sessionStorage.setItem("listaExecutores", JSON.stringify(novosExecutoresSession));
+    setListaExecutores(novosExecutoresSession);
     setatualizaExecutores(atualizaExecutores + 1);
   }
 
   async function removeExecutorFromFirestore(id) {
     try {
-      await deleteDoc(doc(executoresRef, id)); // Usando a nova referência diligenciasRef
+      await deleteDoc(doc(executoresRef, id));
       return true;
     } catch (error) {
-      console.error("Error deleting diligencia from Firestore:", error);
+      console.error("Erro ao deletar executor do Firestore:", error);
       return false;
     }
   }

@@ -174,13 +174,13 @@ export function CardDiligencia({
       <Card status={currentStatus}>
         <LeftInfo onClick={handleClick}>
           <ul>
-            <li>{tipo}</li>
-            <li>{cliente}</li>
-            <li>{responsavel}</li>
-            <li>{data}</li>
-            <li>{local}</li>
-            <li>{cidade}</li>
-            <li>{valor}</li>
+            <li className="tipo">{tipo}</li>
+            <li className="cliente">{cliente}</li>
+            <li className="responsavel">{responsavel}</li>
+            <li className="data">{data}</li>
+            <li className="local">{local}</li>
+            <li className="cidade">{cidade}</li>
+            <li className="valor">{valor}</li>
           </ul>
         </LeftInfo>
         <Status status={currentStatus} onClick={handleStatusClick}>

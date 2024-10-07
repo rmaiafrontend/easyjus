@@ -28,17 +28,19 @@ export const Overlay = styled.div`
 export const Form = styled.div`
   position: relative;
   padding: 22px 22px;
-  width: 100%;
+  width: 90%;
   max-width: 74.3rem;
   height: 34rem;
   background-color: #fff;
   border-radius: 1.5rem;
   box-shadow: 4px 4px 48px 0px rgba(0, 0, 0, 0.25);
-
   h2 {
     color: #000;
     font-size: 24px;
     font-weight: 500;
+  }
+  @media (max-width: 640px) {
+    height: auto;
   }
 `;
 
@@ -46,14 +48,23 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 2.2rem;
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 
 export const LeftContent = styled.div`
   width: 49%;
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 
 export const RightContent = styled.div`
   width: 49%;
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 
 export const CloseButton = styled.button`

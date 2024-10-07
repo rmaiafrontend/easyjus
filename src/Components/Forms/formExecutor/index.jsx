@@ -72,15 +72,25 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
         docData.profileFoto = newDocument;
       }
 
+      // Verifique se o executor já existe na lista antes de adicionar
+      const sessionStorageData = sessionStorage.getItem("listaExecutores");
+      let listaExecutoresSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
+
+      const exists = listaExecutoresSession.some((executor) => executor.cpf === cpfValue || executor.email === emailValue);
+      if (exists) {
+        alert("Este executor já foi cadastrado.");
+        return;
+      }
+
       // Adicione o executor ao Firestore e obtenha o ID gerado
       const docRef = await addDoc(executoresRef, docData);
 
       // Adicione o Firestore document ID (firestoreId) ao objeto docData
       docData.id = docRef.id;
 
-      listaExecutoresLocal.unshift(docData);
-
-      await localStorage.setItem("listaExecutores", JSON.stringify(listaExecutoresLocal));
+      // Adicione o novo executor à lista no sessionStorage
+      listaExecutoresSession.unshift(docData);
+      sessionStorage.setItem("listaExecutores", JSON.stringify(listaExecutoresSession));
 
       setatualizaExecutores(atualizaExecutores + 1);
       alert("Executor cadastrado com sucesso!");

@@ -28,11 +28,23 @@ export const useLogin = () => {
         setError(null);
       }
     } catch (err) {
-      if (!isCancelled) {
-        console.log(err.message);
-        setError(err.message);
-        setIsPending(false);
+      console.log("Firebase Auth Error:", err.code, err.message);
+
+      let errorMessage = "Erro ao fazer login. Tente novamente.";
+
+      // Mapeie códigos de erro específicos do Firebase para mensagens amigáveis
+      if (err.code === "auth/user-not-found") {
+        errorMessage = "Usuário não encontrado. Verifique seu e-mail.";
+      } else if (err.code === "auth/wrong-password") {
+        errorMessage = "Senha incorreta. Tente novamente.";
+      } else if (err.code === "auth/invalid-credential") {
+        errorMessage = "Email ou senha incorretos. Tente Novamente";
+      } else if (err.code === "auth/too-many-requests") {
+        errorMessage = "Muitas tentativas. Tente novamente mais tarde.";
       }
+
+      setError(errorMessage);
+      setIsPending(false);
     }
   };
 

@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const Card = styled.div`
   z-index: 2;
   width: 100%;
-  max-width: 25.7rem;
   height: 9.7rem;
-  margin-left: 2rem;
   border-radius: 20px;
   background: #fff;
   box-shadow: -3px 3px 8px 0px rgba(0, 0, 0, 0.12);

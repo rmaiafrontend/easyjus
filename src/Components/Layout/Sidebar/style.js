@@ -14,18 +14,29 @@ export const Bar = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   background-color: #fff;
+  @media (max-width: 1170px) {
+    height: 95vh;
+    width: 100%;
+    z-index: 200;
+  }
 `;
 
 export const ContainerLogo = styled.div`
   width: 21.4rem;
   height: 4.4rem;
   margin-bottom: 6.5rem;
+  @media (max-width: 1170px) {
+    display: none;
+  }
 `;
 
 export const Menu = styled.div`
   width: 100%;
   height: 40.5rem;
   max-width: 21.4rem;
+  @media (max-width: 1170px) {
+    max-width: 90%;
+  }
 `;
 
 export const ListMenu = styled.ul`
@@ -63,6 +74,11 @@ export const ItemMenu = styled.li`
       color: #fff;
     }
   }
+  @media (max-width: 800px) {
+    button {
+      justify-content: center;
+    }
+  }
 `;
 
 export const Logout = styled.button`
@@ -77,5 +93,8 @@ export const Logout = styled.button`
   img {
     width: 15px;
     margin-right: 10px;
+  }
+  @media (max-width: 800px) {
+    justify-content: center;
   }
 `;

@@ -14,7 +14,6 @@ function getStatusColor(status) {
 }
 
 export const Card = styled.div`
-  padding-right: 5.8rem;
   margin-bottom: 1.3rem;
   height: 7.2rem;
   width: 100%;
@@ -49,9 +48,48 @@ export const LeftInfo = styled.div`
       font-weight: 300;
     }
   }
+  @media (max-width: 1170px) {
+    ul {
+      .cliente {
+        display: none;
+      }
+      .responsavel {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 670px) {
+    ul {
+      .valor {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 580px) {
+    ul {
+      .local {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 490px) {
+    ul {
+      li {
+        font-size: 10px;
+      }
+    }
+  }
+  @media (max-width: 420px) {
+    ul {
+      .cidade {
+        display: none;
+      }
+    }
+  }
 `;
 
 export const Status = styled.button`
+  width: 120px;
   cursor: pointer;
   display: inline-block;
   background-color: #ffff;
@@ -63,5 +101,10 @@ export const Status = styled.button`
     color: ${(props) => getStatusColor(props.status)};
     font-size: 12px;
     font-weight: 600;
+  }
+  @media (max-width: 490px) {
+    span {
+      font-size: 10px;
+    }
   }
 `;

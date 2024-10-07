@@ -68,9 +68,13 @@ export function FormEmpresa({ setShowElement, setAtualizaEmpresas, atualizaEmpre
       // Adicione o Firestore document ID (firestoreId) ao objeto docData
       docData.id = docRef.id;
 
-      listaEmpresasLocal.unshift(docData);
+      // Verifique se já existe uma lista de empresas no sessionStorage
+      const sessionStorageData = sessionStorage.getItem("listaEmpresas");
+      const listaEmpresasSession = sessionStorageData ? JSON.parse(sessionStorageData) : [];
 
-      localStorage.setItem("listaEmpresas", JSON.stringify(listaEmpresasLocal));
+      // Adicione a nova empresa à lista no sessionStorage
+      listaEmpresasSession.unshift(docData);
+      sessionStorage.setItem("listaEmpresas", JSON.stringify(listaEmpresasSession));
 
       setAtualizaEmpresas(atualizaEmpresas + 1);
       alert("Empresa cadastrada com sucesso!");
