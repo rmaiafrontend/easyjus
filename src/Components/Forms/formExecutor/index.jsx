@@ -11,10 +11,6 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   const { user, dispatch } = useContext(AuthContext);
   const storage = getStorage();
 
-  // Adicione o executor à lista de executores no localStorage ao ser cadastrado
-  const localStorageData = localStorage.getItem("listaExecutores");
-  const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
@@ -32,13 +28,6 @@ export function FormExecutor({ setShowElement, setatualizaExecutores, atualizaEx
   function handleClick() {
     setShowElement(false);
   }
-
-  useEffect(() => {
-    // // Carregue a lista de executores do localStorage ao montar o componente
-    // const localStorageData = localStorage.getItem("listaExecutores");
-    // const listaExecutoresLocal = localStorageData ? JSON.parse(localStorageData) : [];
-    // setListaExecutores(listaExecutoresLocal);
-  }, []);
 
   async function submitForm(event) {
     try {

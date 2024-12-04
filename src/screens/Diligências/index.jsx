@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Buttons, Diligencias, TitlesList, Titles, Status, Filters, Filter, TodasFilter, PendentesFilter, EnviadasFilter, FinalizadasFilter } from "./style";
+import { Container, Buttons, Diligencias, TitlesList, Titles, Status, Filters, Filter, TodasFilter, PendentesFilter, EnviadasFilter, FinalizadasFilter, ButtonOrganizar } from "./style";
 import CadastraDiligencia from "../../Components/Controllers/cadastraDiligencia";
 import CadastraTipoDiligencia from "../../Components/Controllers/cadastraTipoDiligencia";
 import { ListDiligencias } from "../../Components/Lists/ListDiligencias";
@@ -17,6 +17,7 @@ export function SectionDiligencias() {
   const [showCadastraTipos, setShowCadastraTipos] = useState(false);
   const [firebaseDataLoaded, setFirebaseDataLoaded] = useState(0);
   const [filter, setFilter] = useState("Todas");
+  const [organizarDiligencias, setOrganizarDiligencias] = useState(false);
 
   return (
     <>
@@ -41,7 +42,15 @@ export function SectionDiligencias() {
           <FinalizadasFilter active={filter === "Finalizado"} onClick={() => setFilter("Finalizado")}>
             Finalizadas
           </FinalizadasFilter>
+          <ButtonOrganizar
+            onClick={() => {
+              setOrganizarDiligencias(!organizarDiligencias);
+            }}
+          >
+            Organizar ↓
+          </ButtonOrganizar>
         </Filters>
+
         <TitlesList>
           <Titles>
             <ul>
@@ -58,7 +67,7 @@ export function SectionDiligencias() {
             <span>Status</span>
           </Status>
         </TitlesList>
-        <ListDiligencias firebaseDataLoaded={firebaseDataLoaded} setFirebaseDataLoaded={setFirebaseDataLoaded} filter={filter} />
+        <ListDiligencias firebaseDataLoaded={firebaseDataLoaded} setFirebaseDataLoaded={setFirebaseDataLoaded} filter={filter} organizarDiligencias={organizarDiligencias} />
       </Diligencias>
 
       {showElement && <FormDiligencia setShowElement={setShowElement} setFirebaseDataLoaded={setFirebaseDataLoaded} firebaseDataLoaded={firebaseDataLoaded} />}

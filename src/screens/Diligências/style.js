@@ -27,6 +27,16 @@ export const Diligencias = styled.div`
   }
 `;
 
+export const ButtonOrganizar = styled.div`
+  cursor: pointer;
+  width: fit-content;
+  padding: 5px 15px;
+  background-color: #5232ff;
+  border-radius: 5px;
+  color: #ffff;
+  font-size: 12px;
+`;
+
 export const TitlesList = styled.div`
   margin-top: 2.1rem;
   display: flex;

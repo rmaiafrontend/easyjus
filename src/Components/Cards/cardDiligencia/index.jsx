@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { atualizaStatusFirebase } from "../../../util";
 import { Card, LeftInfo, Status } from "./style";
 import { db } from "../../../services/firebaseconfig";
 import { doc, updateDoc, addDoc, collection, deleteDoc, query, where, getDocs } from "firebase/firestore";
@@ -77,38 +78,7 @@ export function CardDiligencia({
       setCurrentStatus("Pendente");
     }
     setFetch(true);
-  }
-
-  async function atualizaStatusFirebase(novoStatus) {
-    const diligenciaRef = doc(db, "users", user.uid, "diligencias", firestoreId);
-
-    if (status === "Finalizado" && novoStatus != "Finalizado") {
-      excluiDiligenciaFinalizada();
-    }
-
-    await updateDoc(diligenciaRef, {
-      status: novoStatus,
-    });
-
-    // Atualize o status no elemento correspondente no localStorage
-    const sessionStorageData = sessionStorage.getItem("listaDiligencias");
-    const listaDiligenciasLocal = sessionStorage ? JSON.parse(sessionStorageData) : [];
-
-    // Encontre a diligência correspondente no array do localStorage com base no firestoreId
-    const diligenciaToUpdate = listaDiligenciasLocal.find((diligencia) => diligencia.firestoreId === firestoreId);
-
-    // Se encontrarmos a diligência, atualize o status no objeto do localStorage
-    if (diligenciaToUpdate) {
-      diligenciaToUpdate.status = novoStatus;
-
-      // Atualize o localStorage com a lista de diligências atualizada
-      sessionStorage.setItem("listaDiligencias", JSON.stringify(listaDiligenciasLocal));
-    }
-    setAtualizaDiligencias(atualizaDiligencias + 1);
-
-    if (novoStatus === "Finalizado") {
-      registraDiligenciaFinalizada();
-    }
+    atualizaStatusFirebase(currentStatus, id, status);
   }
 
   async function registraDiligenciaFinalizada() {

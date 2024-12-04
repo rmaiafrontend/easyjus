@@ -1,5 +1,6 @@
 import { Overlay, Form, TopContent, MidContent, Container, Button, CloseButton, BottonContent, ButtonDelete, Document, Upload, Load, DeleteFile } from "./style";
 import CampoInput from "../../Controllers/campoCadastro";
+import { atualizaStatusFirebase } from "../../../util";
 import CloseIcon from "../../../assets/close-icon.svg";
 import { useEffect, useState, useContext } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
@@ -11,6 +12,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia, showEdition, setAtualizaDiligencias, atualizaDiligencias }) {
   const [fileList, setFileList] = useState([]); // Lista de arquivos anexadoss
   const [uploading, setUploading] = useState(false);
+
+  const status = "Arquivado";
 
   const { user, dispatch } = useContext(AuthContext);
 
@@ -156,6 +159,9 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
     // Remova o elemento 'a' temporário
     tempLink.remove();
   }
+
+  atualizaStatusFirebase("Arquivado", diligencia.id, diligencia.status);
+
   return (
     <>
       <Overlay>
@@ -218,6 +224,7 @@ export function InfosDiligencia({ closeInfos, diligencia, handleDeleteDiligencia
           <Button onClick={HandleCopy}>Copiar Informações</Button>
           <Button onClick={showEdition}>Editar diligência</Button>
           <ButtonDelete onClick={handleDeleteDiligencia}>Excluir diligência</ButtonDelete>
+          {diligencia.status === "Finalizado" && <ButtonDelete oncClick={() => atualizaStatusFirebase(status, diligencia.id, diligencia.status)}>Arquivar Diligência</ButtonDelete>}
         </Form>
       </Overlay>
     </>

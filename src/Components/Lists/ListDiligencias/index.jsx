@@ -8,8 +8,8 @@ import { EditDiligencia } from "../../Cards/editDiligencia";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-export function ListDiligencias({ firebaseDataLoaded, filter }) {
-  const { user } = useContext(AuthContext);
+export function ListDiligencias({ firebaseDataLoaded, filter, organizarDiligencias }) {
+  const { user, dispatch } = useContext(AuthContext);
   const [listaDiligencias, setListaDiligencias] = useState([]);
   const [showInfos, setShowInfos] = useState(false);
   const [selectedDiligencia, setSelectedDiligencia] = useState();
@@ -24,7 +24,6 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
     getDiligenciasFirebase();
   }, [firebaseDataLoaded, atualizaDiligencias, filter]);
 
-  // Organiza as diligências sempre que listaDiligencias ou filter mudam
   useEffect(() => {
     const filtered = listaDiligencias.filter((diligencia) => {
       if (filter === "Todas") {
@@ -39,22 +38,12 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
       return true;
     });
 
-    // Função para converter a data no formato DD/MM/YYYY para um objeto Date
-    function convertToDate(data, hora = "00:00") {
-      const [day, month, year] = data.split("/");
-      const [hours, minutes] = hora.split(":");
-      return new Date(year, month - 1, day, hours, minutes); // O mês é zero-indexado
-    }
-
-    // Organizar a lista por data e hora
-    const sortedDiligencias = filtered.sort((a, b) => {
-      const dateA = convertToDate(a.data, a.hora);
-      const dateB = convertToDate(b.data, b.hora);
-      return dateA - dateB; // Ordena de forma crescente
-    });
-
-    setFilteredDiligencias(sortedDiligencias);
+    setFilteredDiligencias(filtered);
   }, [listaDiligencias, filter]);
+
+  useEffect(() => {
+    organizaDiligencias();
+  }, [organizarDiligencias]);
 
   async function removeDiligenciaFromSessionStorage(diligencia) {
     const sessionStorageData = sessionStorage.getItem("listaDiligencias");
@@ -133,41 +122,61 @@ export function ListDiligencias({ firebaseDataLoaded, filter }) {
     setIsEditing(true);
   }
 
+  // Função para converter a data no formato DD/MM/YYYY para um objeto Date
+  function convertToDate(data, hora = "00:00") {
+    const [day, month, year] = data.split("/");
+    const [hours, minutes] = hora.split(":");
+    return new Date(year, month - 1, day, hours, minutes); // O mês é zero-indexado
+  }
+
+  function organizaDiligencias() {
+    const sortedDiligencias = [...filteredDiligencias].sort((a, b) => {
+      const dateA = convertToDate(a.data, a.hora);
+      const dateB = convertToDate(b.data, b.hora);
+      return dateA - dateB; // Ordena de forma crescente
+    });
+
+    // Atualiza o estado com a lista ordenada
+    setFilteredDiligencias(sortedDiligencias);
+  }
+
   return (
-    <ContainerDiligencias>
-      {filteredDiligencias.map((item) => (
-        <CardDiligencia
-          key={item.firestoreId}
-          {...item}
-          listaDiligencias={listaDiligencias}
-          setShowInfos={setShowInfos}
-          setSelectedDiligencia={setSelectedDiligencia}
-          setAtualizaDiligencias={setAtualizaDiligencias}
-          atualizaDiligencias={atualizaDiligencias}
-        />
-      ))}
-      {showInfos ? (
-        <InfosDiligencia
-          showEdition={showEdition}
-          closeInfos={() => setShowInfos(false)}
-          diligencia={selectedDiligencia}
-          listaDiligencias={listaDiligencias}
-          handleDeleteDiligencia={handleDeleteDiligencia}
-          setAtualizaDiligencias={setAtualizaDiligencias}
-          atualizaDiligencias={atualizaDiligencias}
-        />
-      ) : null}
-      {isEditing ? (
-        <EditDiligencia
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          closeInfos={() => setIsEditing(false)}
-          diligencia={selectedDiligencia}
-          setAtualizaDiligencias={setAtualizaDiligencias}
-          setListaDiligencias={setListaDiligencias}
-          listaDiligencias={listaDiligencias}
-        />
-      ) : null}
-    </ContainerDiligencias>
+    <>
+      <ContainerDiligencias>
+        {filteredDiligencias.map((item) => (
+          <CardDiligencia
+            key={item.firestoreId}
+            {...item}
+            listaDiligencias={listaDiligencias}
+            setShowInfos={setShowInfos}
+            setSelectedDiligencia={setSelectedDiligencia}
+            setAtualizaDiligencias={setAtualizaDiligencias}
+            atualizaDiligencias={atualizaDiligencias}
+          />
+        ))}
+        {showInfos ? (
+          <InfosDiligencia
+            showEdition={showEdition}
+            closeInfos={() => setShowInfos(false)}
+            diligencia={selectedDiligencia}
+            listaDiligencias={listaDiligencias}
+            handleDeleteDiligencia={handleDeleteDiligencia}
+            setAtualizaDiligencias={setAtualizaDiligencias}
+            atualizaDiligencias={atualizaDiligencias}
+          />
+        ) : null}
+        {isEditing ? (
+          <EditDiligencia
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            closeInfos={() => setIsEditing(false)}
+            diligencia={selectedDiligencia}
+            setAtualizaDiligencias={setAtualizaDiligencias}
+            setListaDiligencias={setListaDiligencias}
+            listaDiligencias={listaDiligencias}
+          />
+        ) : null}
+      </ContainerDiligencias>
+    </>
   );
 }

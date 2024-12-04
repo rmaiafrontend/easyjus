@@ -156,9 +156,9 @@ export function InfosExecutorNew(props) {
   }
 
   async function getDiligenciasFirebase() {
-    const localStorageData = localStorage.getItem("listaDiligencias");
-    if (localStorageData) {
-      const diligenciasData = JSON.parse(localStorageData);
+    const sessionStorageData = sessionStorage.getItem("listaDiligencias");
+    if (sessionStorageData) {
+      const diligenciasData = JSON.parse(sessionStorageData);
       const filteredDiligencias = await diligenciasData.filter((diligencia) => {
         return diligencia.responsavel === props.selectedExecutor.nome && diligencia.status === "Finalizado";
       });
@@ -173,7 +173,7 @@ export function InfosExecutorNew(props) {
         const filteredDiligencias = diligenciasData.filter((diligencia) => {
           return diligencia.responsavel === props.selectedExecutor.nome && diligencia.status === "Finalizado";
         });
-        localStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
+        sessionStorage.setItem("listaDiligencias", JSON.stringify(diligenciasData));
         setListaDiligencias(filteredDiligencias);
         setDiligenciasFetched(true);
       });

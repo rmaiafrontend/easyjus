@@ -14,7 +14,6 @@ function getStatusColor(status) {
 }
 
 export const Card = styled.div`
-  margin-bottom: 1.3rem;
   height: 7.2rem;
   width: 100%;
   display: flex;
